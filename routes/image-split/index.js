@@ -5,13 +5,15 @@ window.onload = () => new class extends HandlerBase {
         this.url = "";
         this.multiplier = 1;
         this.image = undefined;
+        this.isHorizontal = false;
 
         this.addListeners([
             [ "initial-file-upload", "change", this.handleInitialFileUpload ],
             [ "file-upload", "change", this.handleFileUpload ],
             [ "multiplier", "input", this.handleSlider ],
-            [ "download-button", "click", this.handleDownload ],
-            [ "primary-color", "input", (e) => this.handleColorChange(e.target.value, "--primary") ]
+            [ "toggle-orientation", "click", this.handleOrientationToggle ],
+            [ "primary-color", "input", (e) => this.handleColorChange(e.target.value, "--primary") ],
+            [ "download-button", "click", this.handleDownload ]
         ]);
     }
 
@@ -21,9 +23,8 @@ window.onload = () => new class extends HandlerBase {
     }
 
     handleFileUpload(e) {
-
         const input = e.target;
-        console.log({input});
+
         if (!input.files || !input.files[0]) return;
     
         return readFile(input.files[0], (e, file) => {
@@ -33,7 +34,9 @@ window.onload = () => new class extends HandlerBase {
 
             createImage.bind(this)(this.url, (image) => {
                 this.image = image;
+                this.isHorizontal = this.image.width >= this.image.height;
                 Array.from(document.getElementsByClassName("hide")).forEach(element => element.classList.remove("hide"));
+                createAlert("Uploading", `${file.name} is being uploaded`);
                 this.updateCanvas();
             }, { crossOrigin: "anonymous" })
         });
@@ -41,6 +44,11 @@ window.onload = () => new class extends HandlerBase {
     
     handleSlider() {
         this.multiplier = document.getElementById("multiplier").value;
+        return this.updateCanvas();
+    }
+
+    handleOrientationToggle() {
+        this.isHorizontal = !this.isHorizontal;
         return this.updateCanvas();
     }
 
@@ -58,7 +66,7 @@ window.onload = () => new class extends HandlerBase {
         container.innerHTML = "";
         this.canvases = [];
     
-        const size = (this.image.width >= this.image.height ? this.image.height : this.image.width) / this.multiplier;
+        const size = (this.isHorizontal ? this.image.height : this.image.width) / this.multiplier;
         const ratio = (((window.innerWidth + window.innerHeight) / 2) / ((this.image.width + this.image.height) / 2)) / 2.5;
         const canvas_size = size * ratio;
 

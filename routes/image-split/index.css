@@ -1,13 +1,18 @@
 :root {
     --primary: #90D627;
     --secondary: #23272a;
-    --bg: #2C2F33
+    --bg: #2C2F33;
+    --alert: #D63611;
 }
 
 html {
     font-family: Consolas, 'Courier New', monospace;
     background-color: var(--bg);
     color: var(--primary);
+}
+
+body {
+    overflow-y: hidden;
 }
 
 p {
@@ -176,6 +181,10 @@ input::-webkit-color-swatch {
     margin-bottom: 20px;
 }
 
+.mt {
+    margin-top: 20px;
+}
+
 .label {
     margin-right: 5px;
     font-weight: 700;
@@ -222,4 +231,53 @@ input::-webkit-color-swatch {
     margin-bottom: 100px;
     font-weight: 700;
     font-size: 50px;
+}
+
+.alert-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: absolute;
+    top:0;
+    right:0;
+    z-index: 100;
+    padding-right: 8px;
+    padding-top: 10px;
+    transition: 0.5s;
+}
+
+.alert {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 200px;
+    min-height: 50px;
+    border: 2px solid var(--alert);
+    background-color: var(--secondary);
+    border-radius: 5px;
+    padding: 6px 10px 10px 10px;
+    margin-bottom: 5px;
+    color: var(--alert);
+    animation-name: fade;
+    animation-delay: 2s;
+    animation-duration: 2s;
+}
+
+@keyframes fade {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.alert-title {
+    font-weight: 700;
+    font-size: 15px;
+    border-bottom: 1px solid var(--alert);
+    margin-bottom: 5px;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.alert-description {
+    font-size: 12px;
+    text-align: left;
 }
