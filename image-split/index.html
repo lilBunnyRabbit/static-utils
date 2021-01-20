@@ -3,41 +3,46 @@
     <link rel="stylesheet" href="./index.css">
     <link rel="stylesheet" href="./theme.css">
     <script src="./index.js"></script>
-
+    <script src="../global/global.js"></script>
     <meta property="og:title" content="Image Split">
     <meta property="og:description" content="Split and image into multiple smaller squares">
     <meta property="og:image" content="https://avatars2.githubusercontent.com/u/47859473?s=460&u=dc9a2b7b6ab1e4bf13cb2431bc9c59a3e32796c3">
   </head>
-  <body class="light">
+  <body>
     <div class="root">
       <div class="toolbar">
         <div class="col">
           <label for="file-upload" class="custom-file-upload mb">
             Upload image
           </label>
-          <input class="mb" id="file-upload" type="file" style="width: 100%;" accept="image/*"></input>
+          <input class="mb" id="file-upload" type="file" style="width: 100%;" accept="image/*">
 
           <div class="row mb hide">
             <p class="title">Name:</p>
-            <input id="filename" type="text" style="width: 100%;"></input>
+            <input id="filename" type="text" style="width: 100%;">
           </div>
 
           <div class="mb hide">
-            <input id="multiplier" type="range" min="1" max="20" value="1" style="width: 100%;"></input>
+            <input id="multiplier" type="range" min="1" max="20" value="1" style="width: 100%;">
           </div>
 
           <p class="title hide">Data:</p>
-          <ul class="hide" style="margin-top: 5px;">
+          <ul class="hide mb" style="margin-top: 5px;">
             <li class="row">
               <p class="label">Ratio:</p>
               <p id="ratio"></p>
             </li>
 
-            <li class="row">
+            <li class="row mb">
               <p class="label">Square size:</p>
               <p id="square-size"></p>
             </li>
           </ul>
+
+          <div class="row mb hide">
+            <input type="color" id="primary-color" name="primary-color" value="#90D627" style="margin-right: 10px">
+            <label for="primary-color">change color</label>
+          </div>
         </div>
 
         <a href="#" class="button hide" id="download-button">

@@ -1,6 +1,6 @@
 html {
     font-family: 'Courier New', monospace;
-    background-color: #2C2F33;
+    background-color: var(--bg);
     color: var(--primary);
 }
 
@@ -101,6 +101,17 @@ input[type=range]:active::-webkit-slider-thumb {
 
 input[type=range]:active::-webkit-slider-runnable-track {
     background: var(--primary);
+}
+
+input[type="color"] {
+    background-color: var(--secondary);
+    border: none;
+    padding: 0px;
+    outline: none;
+}
+
+input[type="color"]:focus {
+    border: 1px solid var(--primary);
 }
 
 .root {
