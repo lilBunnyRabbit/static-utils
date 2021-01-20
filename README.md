@@ -1,2 +1,2 @@
-# Utils
-- [Image Split](./image-split/index.html)
+# Static utils
+A collection of "utils" written in vanilla HTML.
