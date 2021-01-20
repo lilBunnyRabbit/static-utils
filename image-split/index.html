@@ -1,7 +1,6 @@
 <html>
   <head>
     <link rel="stylesheet" href="./index.css">
-    <link rel="stylesheet" href="./theme.css">
     <script src="./index.js"></script>
     <script src="../global/global.js"></script>
     <meta property="og:title" content="Image Split">
@@ -9,7 +8,16 @@
     <meta property="og:image" content="https://avatars2.githubusercontent.com/u/47859473?s=460&u=dc9a2b7b6ab1e4bf13cb2431bc9c59a3e32796c3">
   </head>
   <body>
-    <div class="root">
+    <div class="version">
+      Version 1.0
+    </div>
+    <div id="initial" class="initial">
+      <label for="initial-file-upload" class="custom-file-upload mb initial-upload">
+        Upload
+      </label>
+      <input class="mb" id="initial-file-upload" type="file" style="width: 100%;" accept="image/*">
+    </div>
+    <div class="root hide">
       <div class="toolbar">
         <div class="col">
           <label for="file-upload" class="custom-file-upload mb">
@@ -17,17 +25,17 @@
           </label>
           <input class="mb" id="file-upload" type="file" style="width: 100%;" accept="image/*">
 
-          <div class="row mb hide">
+          <div class="row mb">
             <p class="title">Name:</p>
             <input id="filename" type="text" style="width: 100%;">
           </div>
 
-          <div class="mb hide">
+          <div class="mb">
             <input id="multiplier" type="range" min="1" max="20" value="1" style="width: 100%;">
           </div>
 
-          <p class="title hide">Data:</p>
-          <ul class="hide mb" style="margin-top: 5px;">
+          <p class="title">Data:</p>
+          <ul class="mb" style="margin-top: 5px;">
             <li class="row">
               <p class="label">Ratio:</p>
               <p id="ratio"></p>
@@ -39,13 +47,13 @@
             </li>
           </ul>
 
-          <div class="row mb hide">
+          <div class="row mb">
             <input type="color" id="primary-color" name="primary-color" value="#90D627" style="margin-right: 10px">
             <label for="primary-color">change color</label>
           </div>
         </div>
 
-        <a href="#" class="button hide" id="download-button">
+        <a href="#" class="button" id="download-button">
           <button id="download-display" style="width: 100%;"></button>
         </a>
       </div>

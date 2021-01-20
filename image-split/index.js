@@ -7,6 +7,7 @@ window.onload = () => new class extends HandlerBase {
         this.image = undefined;
 
         this.addListeners([
+            [ "initial-file-upload", "change", this.handleInitialFileUpload ],
             [ "file-upload", "change", this.handleFileUpload ],
             [ "multiplier", "input", this.handleSlider ],
             [ "download-button", "click", this.handleDownload ],
@@ -14,8 +15,15 @@ window.onload = () => new class extends HandlerBase {
         ]);
     }
 
+    handleInitialFileUpload(e) {
+        document.getElementById("initial").remove();
+        return this.handleFileUpload(e);
+    }
+
     handleFileUpload(e) {
+
         const input = e.target;
+        console.log({input});
         if (!input.files || !input.files[0]) return;
     
         return readFile(input.files[0], (e, file) => {
