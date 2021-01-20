@@ -1,2 +1,2 @@
 # Static utils
-A collection of "utils" written in vanilla HTML.
+A collection of usefull static sites written in vanilla HTML.
