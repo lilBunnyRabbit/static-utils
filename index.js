@@ -7,7 +7,7 @@ window.onload = () => {
 
         const link = document.createElement("a");
         link.innerText = util.name;
-        link.href = `./routes/${util.path}/index.html`;
+        link.href = `./routes${util.path}/index.html`;
         link.classList.add("link");
         linkBox.appendChild(link);
         
