@@ -6,6 +6,8 @@ window.onload = () => new class extends HandlerBase {
         this.multiplier = 1;
         this.image = undefined;
         this.isHorizontal = false;
+        this.columns = 1;
+        this.rows = 1;
 
         this.addListeners([
             [ "initial-file-upload", "change", this.handleInitialFileUpload ],
@@ -58,7 +60,21 @@ window.onload = () => new class extends HandlerBase {
 
     handleDownload() {
         const filename = document.getElementById("filename").value;
-        return downloadCanvas(this.canvases, filename);
+        return downloadCanvas(this.canvases, filename, { 
+            name: "example.txt", 
+            data: this.createEmojiData(filename) 
+        });
+    }
+
+    createEmojiData(filename) {
+        let data = "";
+        for (let i = 0; i < this.rows; i++) {
+            for (let j = 0; j < this.columns; j++) {
+                data += `:${filename}_${i * this.columns + j + 1}:`
+            }      
+            if(i < this.rows) data += "\n";
+        }
+        return data;
     }
 
     updateCanvas() {
@@ -72,6 +88,9 @@ window.onload = () => new class extends HandlerBase {
 
         const x_multiplier = Math.ceil(this.image.width / size);
         const y_multiplier = Math.ceil(this.image.height / size);
+
+        this.columns = x_multiplier;
+        this.rows = y_multiplier;
 
         container.style.gridTemplateColumns = "auto ".repeat(x_multiplier);
         container.style.gridTemplateRows = "auto ".repeat(y_multiplier);

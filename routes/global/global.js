@@ -3,7 +3,7 @@ function round(value, deicmals = 2) {
     return Math.round(value * p) / p;
 }
 
-function downloadCanvas(input, filename) {
+function downloadCanvas(input, filename, extra) {
     if(!input || !Array.isArray(input)) return;
     createAlert("Downloading", `Downloading ${input.length} images as "${filename}.zip"`);
 
@@ -12,6 +12,8 @@ function downloadCanvas(input, filename) {
         const data = canvas.toDataURL("image/png").replace("data:image/png;base64,", "");
         return zip.file(`${filename}_${i + 1}.png`, data, { base64: true });
     });
+
+    if(extra) zip.file(extra.name, extra.data);
 
     return zip.generateAsync({ type: "blob" }).then((blob) => {
         const link = document.createElement("a");
