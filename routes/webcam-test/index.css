@@ -45,6 +45,16 @@ button:active {
     font-size: 10px;
 }
 
+video {
+    border: 5px solid var(--secondary);
+    max-height: 60vh;
+    max-width: 90vw;
+}
+
+video:focus {
+    outline: none;
+}
+
 .root {
     display: flex; 
     flex-direction: column; 
@@ -53,13 +63,6 @@ button:active {
     align-items: center; 
     height: 85vh;
     margin-top: 20px;
-}
-
-.video-container {
-    width: fit-content;
-    height: fit-content;
-    min-width: 16vh;
-    min-height: 9vh;
 }
 
 .action-bar {
