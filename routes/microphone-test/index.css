@@ -1,0 +1,22 @@
+.root {
+    height: 90vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.mb {
+    margin-bottom: 20px;
+}
+
+.title{
+    font-weight: 700;
+    font-size: 50px;
+}
+
+.canvas {
+    width: 100%;
+}

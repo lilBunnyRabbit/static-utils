@@ -1,0 +1,142 @@
+@import "theme.css";
+
+html {
+    font-family: Consolas, 'Courier New', monospace;
+    background-color: var(--bg);
+    color: var(--primary);
+}
+
+body {
+    overflow-y: hidden;
+}
+
+p {
+    margin: 0px;
+}
+
+li::before {
+    content: "-";
+    padding-right: 5px;
+}
+
+ul {
+    margin-top: 5px;
+    padding-left: 10px;
+}
+
+button, .custom-file-upload, input[type="text"] {
+    border: none;
+    color: var(--primary);
+    font-weight: bold;
+    background-color: var(--secondary);
+    padding: 10px;
+    transition: 0.5s;
+    outline: 0;
+    border: 1px solid var(--primary);
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    box-sizing: border-box;
+    font: 700 13.3333px Arial;
+    border-radius: 2px;
+}
+
+input[type="text"] {
+    text-align: left !important;
+}
+
+button:hover, .custom-file-upload:hover, input[type="text"]:focus {
+    color: var(--secondary);
+    background-color: var(--primary);
+}
+
+button:active, .custom-file-upload:active {
+    font-size: 10px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    margin: 18px 0;
+    width: 100%;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    background: var(--secondary);
+    border-radius: 2px;
+    border: 0.2px solid var(--primary);
+    transition: 0.2s;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid var(--primary);
+    height: 30px;
+    width: 16px;
+    border-radius: 3px;
+    background: var(--primary);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -11px;
+    transition: 0.1s;
+}
+
+input[type=range]:active::-webkit-slider-thumb {
+    background: var(--secondary);
+    height: 36px;
+    margin-top: -14px;
+}
+
+input[type=range]:active::-webkit-slider-runnable-track {
+    background: var(--primary);
+}
+
+input[type="color"] {
+    background-color: var(--secondary);
+    border: none;
+    padding: 0px;
+    outline: none;
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+input[type="color"]:focus {
+    border: 1px solid var(--primary);
+}
+
+input::-webkit-color-swatch {
+    border: none;
+}
+
+video:focus {
+    outline: none;
+}
+
+.version {
+    position: absolute;
+    bottom:0;
+    right:0;
+    z-index: 100;
+    color: #51575e;
+    padding-right: 8px;
+    padding-bottom: 3px;
+    font-size: small;
+}

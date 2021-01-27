@@ -8,5 +8,10 @@ function getUtils() { return [
         "name": "Webcam test",
         "path": "/webcam-test",
         "description": "Simple page that displays your webcam"
+    },
+    {
+        "name": "Microphone test",
+        "path": "/microphone-test",
+        "description": "Simple page that displays your microphone input signal"
     }
 ]}
