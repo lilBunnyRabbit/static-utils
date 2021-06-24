@@ -1,18 +1,31 @@
 <html>
   <head>
     <link rel="stylesheet" href="../../global/global.css" />
-    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./index.css" />
     <script src="./index.js"></script>
 
-    <meta property="og:title" content="Webcam test">
-    <meta property="og:description" content="Displays the webcam">
+    <meta property="og:title" content="Webcam test" />
+    <meta property="og:description" content="Displays the webcam" />
 
     <title>Webcam test</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-V8HYKKZTP6"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-V8HYKKZTP6");
+    </script>
   </head>
   <body>
-    <div class="version">
-      Version 1.2
-    </div>
+    <div class="version">Version 1.2</div>
     <div class="root">
       <span class="title">Webcam test</span>
       <video autoplay="true" id="player" controls></video>

@@ -1,29 +1,57 @@
 <html>
   <head>
     <link rel="stylesheet" href="../../global/global.css" />
-    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./index.css" />
     <script src="./index.js"></script>
     <script src="../../global/global.js"></script>
     <script src="../../libs/jszip.min.js"></script>
 
-    <meta property="og:title" content="Image Split">
-    <meta property="og:description" content="Split and image into multiple smaller squares">
-    <meta property="og:image" content="https://avatars2.githubusercontent.com/u/47859473?s=460&u=dc9a2b7b6ab1e4bf13cb2431bc9c59a3e32796c3">
-    
+    <meta property="og:title" content="Image Split" />
+    <meta
+      property="og:description"
+      content="Split and image into multiple smaller squares"
+    />
+    <meta
+      property="og:image"
+      content="https://avatars2.githubusercontent.com/u/47859473?s=460&u=dc9a2b7b6ab1e4bf13cb2431bc9c59a3e32796c3"
+    />
+
     <title>Image Split</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-V8HYKKZTP6"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-V8HYKKZTP6");
+    </script>
   </head>
   <body>
-    <div class="version">
-      Version 1.5
-    </div>
+    <div class="version">Version 1.5</div>
     <div id="alert-box" class="alert-box"></div>
     <div id="initial" class="initial">
-      <div class="col" style="width: 100%; align-items: center;">
+      <div class="col" style="width: 100%; align-items: center">
         <p class="big-title">Image Split</p>
-        <label for="initial-file-upload" class="custom-file-upload mb initial-upload">
+        <label
+          for="initial-file-upload"
+          class="custom-file-upload mb initial-upload"
+        >
           Upload
         </label>
-        <input class="mb" id="initial-file-upload" type="file" style="width: 100%;" accept="image/*">
+        <input
+          class="mb"
+          id="initial-file-upload"
+          type="file"
+          style="width: 100%"
+          accept="image/*"
+        />
       </div>
     </div>
     <div class="root hide">
@@ -32,19 +60,37 @@
           <label for="file-upload" class="custom-file-upload mb">
             Upload image
           </label>
-          <input class="mb" id="file-upload" type="file" style="width: 100%;" accept="image/*">
+          <input
+            class="mb"
+            id="file-upload"
+            type="file"
+            style="width: 100%"
+            accept="image/*"
+          />
 
           <div class="row mb">
             <p class="title">Name:</p>
-            <input id="filename" type="text" style="width: 100%;" onClick="this.setSelectionRange(0, this.value.length)">
+            <input
+              id="filename"
+              type="text"
+              style="width: 100%"
+              onClick="this.setSelectionRange(0, this.value.length)"
+            />
           </div>
 
           <div class="mb">
-            <input id="multiplier" type="range" min="1" max="20" value="1" style="width: 100%;">
+            <input
+              id="multiplier"
+              type="range"
+              min="1"
+              max="20"
+              value="1"
+              style="width: 100%"
+            />
           </div>
 
           <p class="title">Data:</p>
-          <ul class="mb" style="margin-top: 5px;">
+          <ul class="mb" style="margin-top: 5px">
             <li class="row">
               <p class="label">Ratio:</p>
               <p id="ratio"></p>
@@ -56,16 +102,24 @@
             </li>
           </ul>
 
-          <button class="mt mb" id="toggle-orientation">Toggle orientation</button>
+          <button class="mt mb" id="toggle-orientation">
+            Toggle orientation
+          </button>
 
           <div class="row mt">
-            <input type="color" id="primary-color" name="primary-color" value="#90D627" style="margin-right: 10px">
+            <input
+              type="color"
+              id="primary-color"
+              name="primary-color"
+              value="#90D627"
+              style="margin-right: 10px"
+            />
             <label for="primary-color">change color</label>
           </div>
         </div>
 
         <a href="#" class="button" id="download-button">
-          <button id="download-display" style="width: 100%;"></button>
+          <button id="download-display" style="width: 100%"></button>
         </a>
       </div>
 

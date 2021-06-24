@@ -4,15 +4,28 @@
     <link rel="stylesheet" href="./index.css" />
     <script src="./index.js"></script>
 
-    <meta property="og:title" content="Microphone test">
-    <meta property="og:description" content="Displays your microphone signal">
+    <meta property="og:title" content="Microphone test" />
+    <meta property="og:description" content="Displays your microphone signal" />
 
     <title>Microphone test</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-V8HYKKZTP6"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-V8HYKKZTP6");
+    </script>
   </head>
   <body>
-    <div class="version">
-        Version 1.0
-    </div>
+    <div class="version">Version 1.0</div>
     <div class="root">
       <p class="title mb">Microphone Test</p>
       <canvas id="canvas" class="canvas mb"></canvas>
