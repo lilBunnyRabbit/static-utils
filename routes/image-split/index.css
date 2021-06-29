@@ -61,6 +61,8 @@ body {
   margin-right: 16px;
   width: 400px;
   background-color: var(--secondary);
+  -webkit-box-shadow: 0 0px 8px 0 rgb(0 0 0 / 32%), 0 0px 20px 8px rgb(0 0 0 / 24%);
+  box-shadow: 0 0px 8px 0 rgb(0 0 0 / 32%), 0 0px 20px 8px rgb(0 0 0 / 24%);
 }
 
 #canvas-box {
@@ -76,8 +78,8 @@ body {
 #canvas {
   max-width: 100%;
   max-height: 100%;
-  -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.7);
-  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.7);
+  -webkit-box-shadow: 0 0px 8px 0 rgb(0 0 0 / 32%), 0 0px 20px 8px rgb(0 0 0 / 24%);
+  box-shadow: 0 0px 8px 0 rgb(0 0 0 / 32%), 0 0px 20px 8px rgb(0 0 0 / 24%);
   background-color: var(--secondary);
 }
 
