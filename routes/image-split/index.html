@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" href="../../global/global.css" />
@@ -34,97 +35,170 @@
     </script>
   </head>
   <body>
-    <div class="version">Version 1.5</div>
-    <div id="alert-box" class="alert-box"></div>
-    <div id="initial" class="initial">
-      <div class="col" style="width: 100%; align-items: center">
-        <p class="big-title">Image Split</p>
-        <label
-          for="initial-file-upload"
-          class="custom-file-upload mb initial-upload"
-        >
-          Upload
-        </label>
-        <input
-          class="mb"
-          id="initial-file-upload"
-          type="file"
-          style="width: 100%"
-          accept="image/*"
-        />
-      </div>
-    </div>
-    <div class="root hide">
-      <div class="toolbar">
-        <div class="col">
-          <label for="file-upload" class="custom-file-upload mb">
-            Upload image
-          </label>
-          <input
-            class="mb"
-            id="file-upload"
-            type="file"
-            style="width: 100%"
-            accept="image/*"
-          />
+    <div class="version">Version 2.0.0</div>
+    <div id="alert-box"></div>
 
-          <div class="row mb">
-            <p class="title">Name:</p>
+    <!-- Upload Page -->
+    <div id="upload-page">
+      <p class="big-title">Image Split</p>
+      <label
+        for="initial-file-upload"
+        class="custom-file-upload mb initial-upload"
+      >
+        Upload
+      </label>
+      <input
+        class="mb"
+        id="initial-file-upload"
+        type="file"
+        style="width: 100%"
+        accept="image/*"
+      />
+    </div>
+
+    <!-- Main Page -->
+    <div id="main-page">
+      <!-- Toolbar -->
+      <div id="toolbar">
+        <div class="col">
+          <!-- Image File -->
+          <div class="toolbar-section">
+            <a class="toolbar-title">Image Split</a>
+            <label for="file-upload" class="custom-file-upload mb">
+              Change image
+            </label>
             <input
-              id="filename"
-              type="text"
+              class="mb"
+              id="file-upload"
+              type="file"
               style="width: 100%"
-              onClick="this.setSelectionRange(0, this.value.length)"
+              accept="image/*"
             />
+
+            <div class="row">
+              <p class="title">Name:</p>
+              <input
+                id="filename"
+                type="text"
+                style="width: 100%"
+                onClick="this.setSelectionRange(0, this.value.length)"
+              />
+            </div>
           </div>
 
-          <div class="mb">
+          <!-- Utils -->
+          <div class="toolbar-section">
+            <div class="row">
+              <p class="title">Ratio:</p>
+              <p id="ratio"></p>
+            </div>
+
+            <div class="row mb">
+              <p class="title">Square size:</p>
+              <p id="square-size"></p>
+            </div>
+
             <input
+              class="mb"
               id="multiplier"
               type="range"
               min="1"
-              max="20"
+              max="50"
               value="1"
               style="width: 100%"
             />
+
+            <button class="mt" id="toggle-direction"></button>
           </div>
 
-          <p class="title">Data:</p>
-          <ul class="mb" style="margin-top: 5px">
-            <li class="row">
-              <p class="label">Ratio:</p>
-              <p id="ratio"></p>
-            </li>
+          <!-- Colors -->
+          <div class="toolbar-section">
+            <div class="row mb">
+              <input
+                type="color"
+                id="primary-color"
+                class="color-input"
+                name="primary-color"
+                value="#90D627"
+              />
+              <label for="primary-color">Primary color</label>
+            </div>
 
-            <li class="row">
-              <p class="label">Square size:</p>
-              <p id="square-size"></p>
-            </li>
-          </ul>
+            <div class="row mb">
+              <input
+                type="color"
+                id="secondary-color"
+                class="color-input"
+                name="secondary-color"
+                value="#23272a"
+              />
+              <label for="secondary-color">Secondary color</label>
+            </div>
 
-          <button class="mt mb" id="toggle-orientation">
-            Toggle orientation
-          </button>
+            <div class="row mb">
+              <input
+                type="color"
+                id="bg-color"
+                class="color-input"
+                name="bg-color"
+                value="#2C2F33"
+              />
+              <label for="bg-color">Background color</label>
+            </div>
 
-          <div class="row mt">
-            <input
-              type="color"
-              id="primary-color"
-              name="primary-color"
-              value="#90D627"
-              style="margin-right: 10px"
-            />
-            <label for="primary-color">change color</label>
+            <div class="row mb">
+              <input
+                type="color"
+                id="alert-color"
+                class="color-input"
+                name="alert-color"
+                value="#D63611"
+              />
+              <label for="alert-color">Alert color</label>
+            </div>
+
+            <button id="reset-colors" style="width: 100%">
+              Reset Colors
+            </button>
           </div>
         </div>
 
+        <!-- Download -->
         <a href="#" class="button" id="download-button">
-          <button id="download-display" style="width: 100%"></button>
+          <button id="download-display" style="width: 100%">Download</button>
         </a>
       </div>
 
-      <div class="canvas-box">
-        <div id="canvas-container" class="canvas-container hide"></div>
+      <!-- Canvas -->
+      <div id="canvas-box">
+        <canvas id="canvas"></canvas>
+      </div>
+    </div>
+
+    <!-- Download Page -->
+    <div id="download-page">
+      <p class="download-title">Downloading</p>
+      <div class="download-bar-frame">
+        <div id="download-bar"></div>
+      </div>
+      <div id="download-list"></div>
+
+      <div id="download-back-button">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="inherit"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-chevron-left"
+        >
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <p>Back</p>
       </div>
     </div>
   </body>

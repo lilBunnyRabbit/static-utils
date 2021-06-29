@@ -1,139 +1,245 @@
-.root {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    width: 100%;
-    position: relative;
+body,
+html {
+  margin: 0;
+  padding: 0;
 }
 
-.toolbar {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid var(--primary);
-    height: 95vh;
-    padding: 10px;
-    margin-right: 10px;
-    width: 400px;
-    background-color: var(--secondary);
+* {
+  box-sizing: border-box;
 }
 
-.canvas-box {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+body {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  padding: 16px;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
-.canvas-container {
-    display: grid;
-    width: auto;
-    height: auto;
-    border: 0.1px solid var(--primary);
-}
-
-.row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.col {
-    display: flex;
-    flex-direction: column;
-}
-
-.mb {
-    margin-bottom: 20px;
-}
-
-.mt {
-    margin-top: 20px;
-}
-
-.label {
-    margin-right: 5px;
-    font-weight: 700;
-}
-
-.title {
-    margin-right: 5px;
-    font-weight: 700;
-    font-size: large;
-}
-
-.hide {
-    display: none;
-}
-
-.initial {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    margin-top: 10%;
+/* Upload Page */
+#upload-page {
+  display: none;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  margin-top: 10%;
 }
 
 .initial-upload {
-    font-size: 30px;
-    text-transform: uppercase;
-    border-radius: 8px;
-    padding-left: 100px;
-    padding-right: 100px;
+  font-size: 30px;
+  text-transform: uppercase;
+  border-radius: 8px;
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
 .big-title {
-    margin-bottom: 100px;
-    font-weight: 700;
-    font-size: 50px;
+  margin-bottom: 100px;
+  font-weight: 700;
+  font-size: 50px;
 }
 
-.alert-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    position: absolute;
-    top:0;
-    right:0;
-    z-index: 100;
-    padding-right: 8px;
-    padding-top: 10px;
-    transition: 0.5s;
+/* Main Page */
+#main-page {
+  display: none;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
-.alert {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    width: 200px;
-    min-height: 50px;
-    border: 2px solid var(--alert);
-    background-color: var(--secondary);
-    border-radius: 5px;
-    padding: 6px 10px 10px 10px;
-    margin-bottom: 5px;
-    color: var(--alert);
-    animation-name: fade;
-    animation-delay: 2s;
-    animation-duration: 2s;
+#toolbar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--primary);
+  height: 100%;
+  padding: 16px;
+  margin-right: 16px;
+  width: 400px;
+  background-color: var(--secondary);
 }
 
-@keyframes fade {
-    from { opacity: 1; }
-    to { opacity: 0; }
+#canvas-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 64px;
 }
 
-.alert-title {
-    font-weight: 700;
-    font-size: 15px;
-    border-bottom: 1px solid var(--alert);
-    margin-bottom: 5px;
-    text-align: left;
-    text-transform: uppercase;
+#canvas {
+  max-width: 100%;
+  max-height: 100%;
+  -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.7);
+  background-color: var(--secondary);
 }
 
-.alert-description {
-    font-size: 12px;
-    text-align: left;
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.mb {
+  margin-bottom: 16px;
+}
+
+.mt {
+  margin-top: 16px;
+}
+
+.label {
+  margin-right: 8px;
+  font-weight: 700;
+}
+
+.title {
+  margin-right: 8px;
+  font-weight: 700;
+  font-size: large;
+}
+
+.toolbar-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  height: fit-content;
+  position: relative;
+  padding-bottom: 32px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--bg);
+}
+
+.toolbar-section:last-child {
+  margin-bottom: 0px;
+  border-bottom: 0px;
+}
+
+.toolbar-title {
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.color-input {
+  margin-right: 8px;
+}
+
+/* Download Page */
+#download-page {
+  display: none;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  position: relative;
+}
+
+#download-canvas-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 64px;
+}
+
+#download-canvas {
+  max-width: 100%;
+  max-height: 100%;
+  -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.7);
+  background-color: var(--secondary);
+}
+
+#download-bar {
+  width: 0%;
+  height: 100%;
+  background-color: var(--primary);
+  color: var(--secondary);
+  font-weight: 700;
+  text-align: center;
+  transition: width 0.1s linear;
+}
+
+#download-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  border: 1px solid var(--primary);
+  padding: 16px;
+  height: 100%;
+  overflow-y: auto;
+  background-color: var(--secondary);
+}
+
+#download-back-button {
+  position: fixed;
+  top: 48px;
+  left: 32px;
+  display: none;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  stroke: var(--alert);
+  color: var(--alert);
+  cursor: pointer;
+  user-select: none;
+  opacity: 0.9;
+}
+
+#download-back-button:hover {
+  opacity: 1;
+}
+
+#download-back-button > p {
+  margin-left: 8px;
+  font-size: 24px;
+}
+
+.download-title {
+  margin-bottom: 32px;
+  font-weight: 700;
+  font-size: 50px;
+}
+
+.download-bar-frame {
+  width: 100%;
+  height: 24px;
+  border: 1px solid var(--primary);
+  margin-bottom: 16px;
+  position: relative;
+  background-color: var(--secondary);
+}
+
+.download-link {
+  color: var(--alert);
+  opacity: 0.9;
+  font-weight: 700;
+  font-size: 24px;
+  margin-top: 16px;
+}
+
+.download-link:hover {
+  opacity: 1;
 }
