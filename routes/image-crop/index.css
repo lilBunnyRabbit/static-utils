@@ -1,0 +1,76 @@
+body {
+  margin: 16px 16px;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 16px;
+  box-sizing: border-box;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.title {
+  margin-bottom: 32px;
+  font-weight: 700;
+  font-size: 42px;
+  text-align: center;
+}
+
+.action-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.action-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.action-box > * {
+  width: 100%;
+}
+
+.canvas-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  height: fit-content;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.canvas-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--primary);
+  aspect-ratio: 1;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  background: var(--secondary);
+  position: relative;
+}
+
+.canvas-box > canvas {
+  object-fit: contain;
+  max-width: 100%;
+  background: var(--bg);
+}
+
+.canvas-data {
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="../../global/global.css" />
+    <link rel="stylesheet" href="./index.css" />
+    <script src="./index.js" defer></script>
+    <script src="../../global/global.js"></script>
+
+    <meta property="og:title" content="Image Crop" />
+    <meta property="og:description" content="Remove transparent pixels around image" />
+
+    <title>Image Crop</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V8HYKKZTP6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-V8HYKKZTP6");
+    </script>
+  </head>
+  <body>
+    <div class="version">Version 0.0.0</div>
+    <div class="container">
+      <div class="title">Image Crop</div>
+      <div class="action-container">
+        <div class="action-box">
+          <label id="image-upload-label" for="image-upload" class="custom-file-upload">Select Image</label>
+          <input id="image-upload" type="file" accept="image/*" />
+        </div>
+        <div class="action-box">
+          <button id="download-button">Download</button>
+        </div>
+      </div>
+  
+      <div class="canvas-container">
+        <div class="canvas-box">
+          <canvas id="canvas-original" width="0px" height="0px"></canvas>
+        </div>
+        <div class="canvas-box">
+          <canvas id="canvas-crop" width="0px" height="0px"></canvas>
+        </div>
+      </div>
+  
+      <div class="canvas-container">
+        <div id="canvas-original-data" class="canvas-data"></div>
+        <div id="canvas-crop-data" class="canvas-data"></div>
+      </div>
+    </div>
+  </body>
+</html>

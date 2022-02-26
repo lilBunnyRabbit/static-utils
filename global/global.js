@@ -3,6 +3,18 @@ function round(value, deicmals = 2) {
   return Math.round(value * p) / p;
 }
 
+function downloadSingleCanvas(input, filename) {
+  if(!input) return;
+  const link = document.createElement("a");
+
+  link.target = "_blank";
+  link.href = input.toDataURL("image/png");
+  link.download = filename;
+  link.click();
+
+  return link.remove();
+}
+
 function downloadCanvas(input, filename, extra) {
   if (!input || !Array.isArray(input)) return;
   createAlert(

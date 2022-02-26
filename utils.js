@@ -13,5 +13,10 @@ function getUtils() { return [
         "name": "Microphone test",
         "path": "/microphone-test",
         "description": "Simple page that displays your microphone input signal"
+    },
+    {
+        "name": "Image crop",
+        "path": "/image-crop",
+        "description": "Helper for the \"Discord Voice Chat Overlay Generator\""
     }
 ]}
