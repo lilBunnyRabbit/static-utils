@@ -8,10 +8,7 @@
     <script src="../../libs/jszip.min.js"></script>
 
     <meta property="og:title" content="Image Split" />
-    <meta
-      property="og:description"
-      content="Split and image into multiple smaller squares"
-    />
+    <meta property="og:description" content="Split and image into multiple smaller squares" />
     <meta
       property="og:image"
       content="https://avatars2.githubusercontent.com/u/47859473?s=460&u=dc9a2b7b6ab1e4bf13cb2431bc9c59a3e32796c3"
@@ -20,10 +17,7 @@
     <title>Image Split</title>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-V8HYKKZTP6"
-    ></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XPJ8VF9PGN"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -31,7 +25,7 @@
       }
       gtag("js", new Date());
 
-      gtag("config", "G-V8HYKKZTP6");
+      gtag("config", "G-XPJ8VF9PGN");
     </script>
   </head>
   <body>
@@ -41,19 +35,8 @@
     <!-- Upload Page -->
     <div id="upload-page">
       <p class="big-title">Image Split</p>
-      <label
-        for="initial-file-upload"
-        class="custom-file-upload mb initial-upload"
-      >
-        Upload
-      </label>
-      <input
-        class="mb"
-        id="initial-file-upload"
-        type="file"
-        style="width: 100%"
-        accept="image/*"
-      />
+      <label for="initial-file-upload" class="custom-file-upload mb initial-upload"> Upload </label>
+      <input class="mb" id="initial-file-upload" type="file" style="width: 100%" accept="image/*" />
     </div>
 
     <!-- Main Page -->
@@ -64,16 +47,8 @@
           <!-- Image File -->
           <div class="toolbar-section">
             <a class="toolbar-title">Image Split</a>
-            <label for="file-upload" class="custom-file-upload mb">
-              Change image
-            </label>
-            <input
-              class="mb"
-              id="file-upload"
-              type="file"
-              style="width: 100%"
-              accept="image/*"
-            />
+            <label for="file-upload" class="custom-file-upload mb"> Change image </label>
+            <input class="mb" id="file-upload" type="file" style="width: 100%" accept="image/*" />
 
             <div class="row">
               <p class="title">Name:</p>
@@ -98,15 +73,7 @@
               <p id="square-size"></p>
             </div>
 
-            <input
-              class="mb"
-              id="multiplier"
-              type="range"
-              min="1"
-              max="50"
-              value="1"
-              style="width: 100%"
-            />
+            <input class="mb" id="multiplier" type="range" min="1" max="50" value="1" style="width: 100%" />
 
             <button class="mt" id="toggle-direction"></button>
           </div>
@@ -114,52 +81,26 @@
           <!-- Colors -->
           <div class="toolbar-section">
             <div class="row mb">
-              <input
-                type="color"
-                id="primary-color"
-                class="color-input"
-                name="primary-color"
-                value="#90D627"
-              />
+              <input type="color" id="primary-color" class="color-input" name="primary-color" value="#90D627" />
               <label for="primary-color">Primary color</label>
             </div>
 
             <div class="row mb">
-              <input
-                type="color"
-                id="secondary-color"
-                class="color-input"
-                name="secondary-color"
-                value="#23272a"
-              />
+              <input type="color" id="secondary-color" class="color-input" name="secondary-color" value="#23272a" />
               <label for="secondary-color">Secondary color</label>
             </div>
 
             <div class="row mb">
-              <input
-                type="color"
-                id="bg-color"
-                class="color-input"
-                name="bg-color"
-                value="#2C2F33"
-              />
+              <input type="color" id="bg-color" class="color-input" name="bg-color" value="#2C2F33" />
               <label for="bg-color">Background color</label>
             </div>
 
             <div class="row mb">
-              <input
-                type="color"
-                id="alert-color"
-                class="color-input"
-                name="alert-color"
-                value="#D63611"
-              />
+              <input type="color" id="alert-color" class="color-input" name="alert-color" value="#D63611" />
               <label for="alert-color">Alert color</label>
             </div>
 
-            <button id="reset-colors" style="width: 100%">
-              Reset Colors
-            </button>
+            <button id="reset-colors" style="width: 100%">Reset Colors</button>
           </div>
         </div>
 
