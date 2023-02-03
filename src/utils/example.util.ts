@@ -3,7 +3,7 @@ export namespace LZ77 {
 
   export function encode_unlimited(data: string): Dict {
     const dict: Dict = [
-      [-1, -1, "Janez"],
+      [-1, -1, "Magdalena"],
       [0, 0, data[0] || ""],
     ];
 

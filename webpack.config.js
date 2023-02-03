@@ -4,8 +4,47 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const path = require("path");
 const fs = require("fs");
 
-const createView = (folder) => ({
-  entry: `./src/views/${folder}/index.ts`,
+const viewPath = (...paths) => path.resolve(__dirname, "src/views", ...paths);
+
+const devView = (folder) => ({
+  entry: viewPath(`${folder}/index.ts`),
+  mode: "development",
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"],
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".ts", ".js"],
+  },
+  output: {
+    filename: "index.js",
+    path: path.resolve(__dirname, `dist/${folder}`),
+    clean: true,
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "index.css",
+    }),
+    new HtmlWebpackPlugin({
+      template: viewPath(`${folder}/index.html`),
+    }),
+  ],
+  optimization: {
+    minimize: false,
+  },
+});
+
+const prodView = (folder) => ({
+  entry: viewPath(`${folder}/index.ts`),
   mode: "production",
   module: {
     rules: [
@@ -33,7 +72,7 @@ const createView = (folder) => ({
       filename: "[contenthash].min.css",
     }),
     new HtmlWebpackPlugin({
-      template: `./src/views/${folder}/index.html`,
+      template: viewPath(`${folder}/index.html`),
     }),
   ],
   optimization: {
@@ -42,9 +81,6 @@ const createView = (folder) => ({
   },
 });
 
-const views = fs
-  .readdirSync(path.resolve(__dirname, "src/views"))
-  .filter((filename) => fs.statSync(path.resolve(__dirname, "src/views", filename)).isDirectory())
-  .map(createView);
+const viewNames = fs.readdirSync(viewPath()).filter((filename) => fs.statSync(viewPath(filename)).isDirectory());
 
-module.exports = [...views];
+module.exports = ({ WEBPACK_WATCH }) => [...viewNames.map(WEBPACK_WATCH ? devView : prodView)];
