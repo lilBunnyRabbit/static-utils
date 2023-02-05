@@ -22,8 +22,16 @@ h2 {
   font-size: 28px;
 }
 
+input[type="number"] {
+  font-family: "Inconsolata", monospace;
+  background: var(--background);
+  border: none;
+  outline: none;
+}
+
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
