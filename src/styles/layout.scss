@@ -1,0 +1,22 @@
+.sidebar-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content 1fr;
+  row-gap: 16px;
+  padding: 16px 0px 16px 16px;
+}
+
+.sidebar {
+  position: relative;
+  background: var(--background-dark);
+  padding: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 256px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--primary);
+  gap: 16px;
+}

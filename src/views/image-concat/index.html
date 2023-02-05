@@ -3,7 +3,7 @@
 
 <head>
   <title>Static Utils | Image Concat</title>
-  <script src="https://lilbunnyrabbit.github.io/cdn/libs/lilstate/0.0.0/lilstate.min.js"></script>
+  <script src="https://lilbunnyrabbit.github.io/cdn/libs/lilstate/0.1.0/lilstate.min.js"></script>
 </head>
 
 <body>
@@ -15,7 +15,10 @@
   <main>
     <div class="sidebar-wrapper">
       <div class="sidebar">
-        <div>
+        <!-- <div>
+          <label for="i-gap">Gap</label>
+        </div> -->
+        <div class="input-box">
           <label for="i-gap">Gap</label>
           <input id="i-gap" type="number" value="0" min="0">
         </div>
@@ -23,30 +26,30 @@
         <div>
           <label for="i-align">Align</label>
           <select id="i-align">
-            <option value="left">Left</option>
+            <option value="start">Start</option>
             <option value="center">Center</option>
-            <option value="right">Right</option>
+            <option value="end">End</option>
           </select>
         </div>
-        
+
         <div>
           <label for="i-background">Background</label>
           <input id="i-background" type="color" value="#e66465">
         </div>
-        
+
         <div>
           <label for="i-alpha">Alpha</label>
           <input id="i-alpha" type="number" value="100" min="0" max="100" step="1">
         </div>
 
         <div>
-          <label for="i-zoom">Zoom</label>
-          <input id="i-zoom" type="number" value="100" min="0" max="200" step="1">
+          <input id="i-fit" type="checkbox">
+          <label for="i-fit">Fit</label>
         </div>
 
         <div>
-          <input id="i-fit" type="checkbox">
-          <label for="i-fit">Fit to Width</label>
+          <input id="i-direction" type="checkbox">
+          <label for="i-direction">Row</label>
         </div>
 
         <div>
@@ -58,9 +61,15 @@
       <div id="sidebar" class="sidebar"></div>
     </div>
 
-    <div id="root">
-      <div id="canvas-wrapper">
-        <canvas id="canvas" width="0" height="0"></canvas>
+    <div class="root-wrapper">
+      <div id="root">
+        <div id="canvas-wrapper">
+          <canvas id="canvas" width="0" height="0"></canvas>
+        </div>
+      </div>
+
+      <div class="zoom-slider">
+        <input id="i-zoom" type="range" min="1" max="100" value="100">
       </div>
     </div>
   </main>

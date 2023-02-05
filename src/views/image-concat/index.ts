@@ -6,16 +6,9 @@ import { debounce } from "../../utils/input.util";
 import { alphaToHex } from "../../utils/number.util";
 import { t } from "../../utils/template.util";
 import { createNotification } from "../../utils/notification.util";
+import { printTodo } from "../../utils/misc.util";
 
-console.log(
-  "%cTODO:%c" +
-    `
-• Input design
-• Image sorting
-`,
-  "font-weight: bold; font-size: 18px",
-  "font-size: 14px"
-);
+printTodo(["Input design", "[WIP] Image sorting"]);
 
 const { State, StateComponent } = (window as any).lilState;
 
@@ -23,15 +16,17 @@ namespace State {
   export type Images = HTMLImageElement[];
   export type Configuration = {
     gap: number;
-    align: "left" | "center" | "right";
+    align: "start" | "center" | "end";
     background: string;
     alpha: number;
     fit: boolean;
+    direction: "column" | "row";
   };
 }
 
 const state = new State(
   {
+    prefix: "static-utils:image-concat",
     useChangeEvent: false,
     useLogs: true,
   },
@@ -47,10 +42,11 @@ const state = new State(
     config: {
       defaultValue: {
         gap: 0,
-        align: "left",
+        align: "start",
         background: "#ffffff",
         alpha: 0,
         fit: false,
+        direction: "column",
       } satisfies State.Configuration,
       config: {
         useLocalStorage: true,
@@ -62,18 +58,27 @@ const state = new State(
 );
 
 const tDeleteImage = t`
-<button class="delete-image">
-  <div class="delete-image-overlay">
-    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+<button class="delete-image" draggable="true">
+  <div class="delete-image-overlay error">
+    <svg data-icon="error" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
       <line x1="18" y1="6" x2="6" y2="18"></line>
       <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+
+    <svg data-icon="drag" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
     </svg>
   </div>
 </button>
 `;
 
 const $sidebar = document.getElementById("sidebar");
+const $root = document.getElementById("root") as HTMLDivElement;
 const $canvasWrapper = document.getElementById("canvas-wrapper") as HTMLDivElement;
 const $canvas = document.getElementById("canvas") as HTMLCanvasElement;
 
@@ -83,6 +88,7 @@ const $inputAlign = document.getElementById("i-align") as HTMLInputElement;
 const $inputBackground = document.getElementById("i-background") as HTMLInputElement;
 const $inputAlpha = document.getElementById("i-alpha") as HTMLInputElement;
 const $inputFit = document.getElementById("i-fit") as HTMLInputElement;
+const $inputDirection = document.getElementById("i-direction") as HTMLInputElement;
 const $inputImage = document.getElementById("i-image") as HTMLInputElement;
 
 class App extends StateComponent {
@@ -92,6 +98,19 @@ class App extends StateComponent {
     super(state, true);
 
     this.renderer = new CanvasRenderer($canvas);
+
+    this.states.images.set(
+      Array(3)
+        .fill(0)
+        .map((_, i) => {
+          const image = new Image();
+          image.src =
+            i % 2 === 0
+              ? "https://www.slovenskenovice.si/media/images/20220118/1113750.2e16d0ba.fill-256x256.jpg"
+              : "https://www.tastingtable.com/img/gallery/why-artificial-banana-flavor-doesnt-taste-like-the-real-thing/intro-1660147847.jpg";
+          return image;
+        })
+    );
 
     let isPasteEnabled = true;
     document.addEventListener("paste", async (event) => {
@@ -123,8 +142,19 @@ class App extends StateComponent {
   private initInputs() {
     const config: State.Configuration = this.states.config.get();
 
+    const updateZoom = (value: number | string, direction: State.Configuration["direction"]) => {
+      const percentage = `${value}%`;
+      if (direction === "column") {
+        $canvasWrapper.style.maxWidth = percentage;
+        $canvasWrapper.style.maxHeight = null;
+      } else {
+        $canvasWrapper.style.maxWidth = null;
+        $canvasWrapper.style.maxHeight = percentage;
+      }
+    };
+
     $inputZoom.addEventListener("input", (e) => {
-      $canvasWrapper.style.maxWidth = `${(e.target as HTMLInputElement).value}%`;
+      updateZoom((e.target as HTMLInputElement).value, this.states.config.get().direction);
     });
 
     $inputGap.value = String(config.gap);
@@ -175,6 +205,18 @@ class App extends StateComponent {
         fit: !!(e.target as HTMLInputElement).checked,
       });
     });
+
+    $inputDirection.checked = config.direction === "row";
+    $root.setAttribute("data-direction", config.direction);
+    $inputDirection.addEventListener("change", (e) => {
+      const direction = (e.target as HTMLInputElement).checked ? "row" : "column";
+      this.states.config.set({ ...this.states.config.get(), direction });
+      $root.setAttribute("data-direction", direction);
+
+      updateZoom($inputZoom.value, direction);
+    });
+
+    updateZoom($inputZoom.value, config.direction);
   }
 
   $onStateChange(key: string) {
@@ -189,16 +231,117 @@ class App extends StateComponent {
     }
   }
 
+  updateCanvasSize(images: State.Images, config: State.Configuration) {
+    let size = { width: 0, height: 0 };
+
+    if (config.direction === "column") {
+      let maxWidth = 0;
+      let height = Math.max(0, images.length - 1) * config.gap;
+
+      images.forEach((image) => {
+        if (image.width > maxWidth) maxWidth = image.width;
+        height += image.height;
+      });
+
+      size = { width: maxWidth, height };
+    } else {
+      let width = Math.max(0, images.length - 1) * config.gap;
+      let maxHeight = 0;
+
+      images.forEach((image) => {
+        if (image.height > maxHeight) maxHeight = image.height;
+        width += image.width;
+      });
+
+      size = { width, height: maxHeight };
+    }
+
+    this.renderer.canvas.width = size.width;
+    this.renderer.canvas.height = size.height;
+  }
+
+  clearCanvas(config: State.Configuration) {
+    if (config.alpha > 0) this.renderer.fill(`${config.background}${alphaToHex(config.alpha)}`);
+    else this.renderer.clear();
+  }
+
+  updateImagesToFit(images: State.Images, config: State.Configuration) {
+    const { canvas } = this.renderer;
+
+    let imageSizes: Array<{ width: number; height: number }> = [];
+
+    if (config.direction === "column") {
+      let height = Math.max(0, images.length - 1) * config.gap;
+
+      imageSizes = images.map((image) => {
+        const h = canvas.width * (image.height / image.width);
+        height += h;
+        return { width: canvas.width, height: h };
+      });
+
+      canvas.height = height;
+    } else {
+      let width = Math.max(0, images.length - 1) * config.gap;
+
+      imageSizes = images.map((image) => {
+        const w = canvas.height * (image.width / image.height);
+        width += w;
+        return { width: w, height: canvas.height };
+      });
+
+      canvas.width = width;
+    }
+
+    this.clearCanvas(config);
+
+    return imageSizes;
+  }
+
+  drawImages(images: State.Images, config: State.Configuration) {
+    const { canvas, ctx } = this.renderer;
+
+    if (config.fit) {
+      const imageSizes = this.updateImagesToFit(images, config);
+
+      images.reduce((prev, image, i) => {
+        if (config.direction === "column") {
+          ctx.drawImage(image, 0, prev, canvas.width, imageSizes[i].height);
+          return prev + imageSizes[i].height + config.gap;
+        } else {
+          ctx.drawImage(image, prev, 0, imageSizes[i].width, canvas.height);
+          return prev + imageSizes[i].width + config.gap;
+        }
+      }, 0);
+    } else {
+      images.reduce((prev, image, i) => {
+        if (config.direction === "column") {
+          let dx = 0;
+          if (config.align === "center") dx = canvas.width / 2 - image.width / 2;
+          else if (config.align === "end") dx = canvas.width - image.width;
+
+          ctx.drawImage(image, dx, prev);
+          return prev + image.height + config.gap;
+        } else {
+          let dy = 0;
+          if (config.align === "center") dy = canvas.height / 2 - image.height / 2;
+          else if (config.align === "end") dy = canvas.height - image.height;
+
+          ctx.drawImage(image, prev, dy);
+          return prev + image.width + config.gap;
+        }
+      }, 0);
+    }
+  }
+
   render() {
     $sidebar.innerHTML = "";
 
     const images: State.Images = this.states.images.get();
     const config: State.Configuration = this.states.config.get();
 
-    if (config.alpha <= 0) this.renderer.clear();
-
-    if (config.fit) this.renderFit(images, config);
-    else this.renderNormal(images, config);
+    this.updateCanvasSize(images, config);
+    this.clearCanvas(config);
+    this.drawImages(images, config);
 
     images.forEach((image, i) => {
       const $deleteImage = tDeleteImage.clone();
@@ -209,34 +352,12 @@ class App extends StateComponent {
         newImages.splice(i, 1);
         this.states.images.set(newImages);
       });
+
+      $button.addEventListener("dragstart", () => $button.classList.add("is-dragging"));
+      $button.addEventListener("dragend", () => $button.classList.remove("is-dragging"));
+
       $sidebar.appendChild($deleteImage);
     });
-  }
-
-  renderNormal(images: State.Images, config: State.Configuration) {
-    const { canvas, ctx } = this.renderer;
-
-    let maxWidth = 0;
-    let height = Math.max(0, images.length - 1) * config.gap;
-
-    images.forEach((image) => {
-      if (image.width > maxWidth) maxWidth = image.width;
-      height += image.height;
-    });
-
-    canvas.width = maxWidth;
-    canvas.height = height;
-
-    if (config.alpha > 0) this.renderer.fill(`${config.background}${alphaToHex(config.alpha)}`);
-
-    images.reduce((prev, image, i) => {
-      let dx = 0;
-      if (config.align === "center") dx = canvas.width / 2 - image.width / 2;
-      else if (config.align === "right") dx = canvas.width - image.width;
-
-      ctx.drawImage(image, dx, prev);
-      return prev + image.height + config.gap;
-    }, 0);
   }
 
   renderFit(images: State.Images, config: State.Configuration) {
