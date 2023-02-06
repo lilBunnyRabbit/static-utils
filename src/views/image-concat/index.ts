@@ -1,18 +1,19 @@
 import "../../scripts/init";
 import "./index.scss";
-import { getImageFromClipboard, getImagesFromInput } from "../../utils/event.util";
 import { CanvasRenderer } from "../../utils/canvas.util";
+import { getImageFromClipboard, getImagesFromInput } from "../../utils/event.util";
 import { debounce } from "../../utils/input.util";
+import { printTodo } from "../../utils/misc.util";
+import { createNotification } from "../../utils/notification.util";
 import { alphaToHex } from "../../utils/number.util";
 import { t } from "../../utils/template.util";
-import { createNotification } from "../../utils/notification.util";
-import { printTodo } from "../../utils/misc.util";
+import "./index.scss";
 
-printTodo(["Input design", "[WIP] Image sorting"]);
+printTodo(["[WIP] Image sorting", "Grid"]);
 
 const { State, StateComponent } = (window as any).lilState;
 
-namespace State {
+namespace ImageConcatState {
   export type Images = HTMLImageElement[];
   export type Configuration = {
     gap: number;
@@ -29,29 +30,32 @@ const state = new State(
     prefix: "static-utils:image-concat",
     useChangeEvent: false,
     useLogs: true,
+    useRefetchOnFocus: true,
   },
   {
     images: {
-      defaultValue: [] satisfies State.Images,
+      defaultValue: [] satisfies ImageConcatState.Images,
       config: {
         useLocalStorage: false,
         useEvents: true,
         onBeforeSet: null,
+        useRefetchOnFocus: false,
       },
     },
     config: {
       defaultValue: {
-        gap: 0,
+        gap: 16,
         align: "start",
-        background: "#ffffff",
-        alpha: 0,
+        background: "#ff0000",
+        alpha: 100,
         fit: false,
         direction: "column",
-      } satisfies State.Configuration,
+      } satisfies ImageConcatState.Configuration,
       config: {
-        useLocalStorage: true,
+        useLocalStorage: false,
         useEvents: true,
         onBeforeSet: null,
+        useRefetchOnFocus: true,
       },
     },
   }
@@ -99,19 +103,6 @@ class App extends StateComponent {
 
     this.renderer = new CanvasRenderer($canvas);
 
-    this.states.images.set(
-      Array(3)
-        .fill(0)
-        .map((_, i) => {
-          const image = new Image();
-          image.src =
-            i % 2 === 0
-              ? "https://www.slovenskenovice.si/media/images/20220118/1113750.2e16d0ba.fill-256x256.jpg"
-              : "https://www.tastingtable.com/img/gallery/why-artificial-banana-flavor-doesnt-taste-like-the-real-thing/intro-1660147847.jpg";
-          return image;
-        })
-    );
-
     let isPasteEnabled = true;
     document.addEventListener("paste", async (event) => {
       if (!isPasteEnabled) return;
@@ -140,9 +131,9 @@ class App extends StateComponent {
   }
 
   private initInputs() {
-    const config: State.Configuration = this.states.config.get();
+    const config: ImageConcatState.Configuration = this.states.config.get();
 
-    const updateZoom = (value: number | string, direction: State.Configuration["direction"]) => {
+    const updateZoom = (value: number | string, direction: ImageConcatState.Configuration["direction"]) => {
       const percentage = `${value}%`;
       if (direction === "column") {
         $canvasWrapper.style.maxWidth = percentage;
@@ -219,9 +210,18 @@ class App extends StateComponent {
     updateZoom($inputZoom.value, config.direction);
   }
 
-  $onStateChange(key: string) {
+  $onStateChange(key: string, value: unknown) {
     switch (key) {
       case "images":
+        if ((value as ImageConcatState.Images).length === 0) {
+          !$canvas.classList.contains("hidden") && $canvas.classList.add("hidden");
+        } else {
+          $canvas.classList.contains("hidden") && $canvas.classList.remove("hidden");
+        }
+
+        this.render();
+        break;
+
       case "config":
         this.render();
         break;
@@ -231,7 +231,7 @@ class App extends StateComponent {
     }
   }
 
-  updateCanvasSize(images: State.Images, config: State.Configuration) {
+  updateCanvasSize(images: ImageConcatState.Images, config: ImageConcatState.Configuration) {
     let size = { width: 0, height: 0 };
 
     if (config.direction === "column") {
@@ -260,12 +260,12 @@ class App extends StateComponent {
     this.renderer.canvas.height = size.height;
   }
 
-  clearCanvas(config: State.Configuration) {
+  clearCanvas(config: ImageConcatState.Configuration) {
     if (config.alpha > 0) this.renderer.fill(`${config.background}${alphaToHex(config.alpha)}`);
     else this.renderer.clear();
   }
 
-  updateImagesToFit(images: State.Images, config: State.Configuration) {
+  updateImagesToFit(images: ImageConcatState.Images, config: ImageConcatState.Configuration) {
     const { canvas } = this.renderer;
 
     let imageSizes: Array<{ width: number; height: number }> = [];
@@ -297,7 +297,7 @@ class App extends StateComponent {
     return imageSizes;
   }
 
-  drawImages(images: State.Images, config: State.Configuration) {
+  drawImages(images: ImageConcatState.Images, config: ImageConcatState.Configuration) {
     const { canvas, ctx } = this.renderer;
 
     if (config.fit) {
@@ -336,8 +336,8 @@ class App extends StateComponent {
   render() {
     $sidebar.innerHTML = "";
 
-    const images: State.Images = this.states.images.get();
-    const config: State.Configuration = this.states.config.get();
+    const images: ImageConcatState.Images = this.states.images.get();
+    const config: ImageConcatState.Configuration = this.states.config.get();
 
     this.updateCanvasSize(images, config);
     this.clearCanvas(config);
@@ -360,7 +360,7 @@ class App extends StateComponent {
     });
   }
 
-  renderFit(images: State.Images, config: State.Configuration) {
+  renderFit(images: ImageConcatState.Images, config: ImageConcatState.Configuration) {
     const { canvas, ctx } = this.renderer;
 
     let maxWidth = 0;

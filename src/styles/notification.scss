@@ -10,7 +10,7 @@
 
   & > .notification {
     padding: 4px 8px;
-    background: #ffffff;
+    background: var(--background-dark);
     color: var(--text);
     border: 1px solid currentColor;
     min-width: 100px;

@@ -3,6 +3,12 @@
 @import "./inputs.scss";
 @import "./layout.scss";
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html {
   font-family: "Roboto", sans-serif;
   color: var(--text);

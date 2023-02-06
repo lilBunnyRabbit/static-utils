@@ -3,7 +3,7 @@
 
 <head>
   <title>Static Utils | Image Concat</title>
-  <script src="https://lilbunnyrabbit.github.io/cdn/libs/lilstate/0.1.0/lilstate.min.js"></script>
+  <script src="https://lilbunnyrabbit.github.io/cdn/libs/lilstate/0.2.0/lilstate.min.js"></script>
 </head>
 
 <body>
@@ -12,18 +12,15 @@
     <span>Paste or upload an image.</span>
   </div>
 
-  <main>
+  <main class="sidebar-layout">
     <div class="sidebar-wrapper">
       <div class="sidebar">
-        <!-- <div>
-          <label for="i-gap">Gap</label>
-        </div> -->
         <div class="input-box">
           <label for="i-gap">Gap</label>
           <input id="i-gap" type="number" value="0" min="0">
         </div>
 
-        <div>
+        <div class="input-box">
           <label for="i-align">Align</label>
           <select id="i-align">
             <option value="start">Start</option>
@@ -32,29 +29,32 @@
           </select>
         </div>
 
-        <div>
+        <div class="input-box">
           <label for="i-background">Background</label>
-          <input id="i-background" type="color" value="#e66465">
+          <input id="i-background" type="color">
         </div>
 
-        <div>
-          <label for="i-alpha">Alpha</label>
-          <input id="i-alpha" type="number" value="100" min="0" max="100" step="1">
-        </div>
+        <input id="i-alpha" type="range" min="0" max="100" value="50">
 
-        <div>
-          <input id="i-fit" type="checkbox">
+        <label class="input-box-checkbox">
+          <div>
+            <input id="i-fit" type="checkbox">
+            <span></span>
+          </div>
           <label for="i-fit">Fit</label>
-        </div>
+        </label>
 
-        <div>
-          <input id="i-direction" type="checkbox">
-          <label for="i-direction">Row</label>
-        </div>
+        <label class="input-box-checkbox">
+          <div>
+            <input id="i-direction" type="checkbox">
+            <span></span>
+          </div>
+          <label for="i-direction">Direction = Row</label>
+        </label>
 
-        <div>
-          <label for="i-image">Upload Images</label>
+        <div class="input-box-file">
           <input id="i-image" type="file" accept="image/*" multiple>
+          <button onclick="document.getElementById('i-image').click();">Upload</button>
         </div>
       </div>
 
@@ -64,12 +64,12 @@
     <div class="root-wrapper">
       <div id="root">
         <div id="canvas-wrapper">
-          <canvas id="canvas" width="0" height="0"></canvas>
+          <canvas class="hidden" id="canvas" width="0" height="0"></canvas>
         </div>
       </div>
 
       <div class="zoom-slider">
-        <input id="i-zoom" type="range" min="1" max="100" value="100">
+        <input id="i-zoom" type="range" min="1" max="100" value="50">
       </div>
     </div>
   </main>

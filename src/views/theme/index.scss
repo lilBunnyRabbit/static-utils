@@ -1,0 +1,23 @@
+.sidebar-wrapper {
+  grid-template-rows: 1fr min-content;
+}
+
+.color-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--primary);
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  & > label {
+    color: var(--primary);
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
