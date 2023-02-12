@@ -1,112 +1,12 @@
-.sidebar-wrapper {
+aside {
   grid-template-rows: min-content 1fr;
 }
 
-.delete-image {
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  max-width: 100%;
-  color: var(--secondary);
-  border: 1px solid currentColor;
-  cursor: pointer;
-  padding: 0px;
-  background: var(--background-dark);
-
-  &:active {
-    transform: translateY(1px);
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    background: currentColor;
-    opacity: 0.25;
-  }
-
-  & > img {
-    object-fit: contain;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    z-index: 1;
-    background: transparent;
-  }
-
-  & > .delete-image-overlay {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 3;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    color: currentColor;
-
-    & > svg {
-      display: none;
-    }
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0px;
-      right: 0px;
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-      background: currentColor;
-      opacity: 0.25;
-    }
-  }
-
-  &:hover {
-    color: var(--error);
-
-    & > .delete-image-overlay {
-      display: flex;
-
-      & > svg[data-icon="error"] {
-        display: inline;
-      }
-    }
-  }
-
-  &.is-dragging {
-    color: var(--success);
-
-    & > .delete-image-overlay {
-      & > svg {
-        &[data-icon="error"] {
-          display: none;
-        }
-
-        &[data-icon="drag"] {
-          display: inline;
-        }
-      }
-    }
-  }
-}
-
-.root-wrapper {
-  position: relative;
-  flex: 1;
+main {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr min-content;
   row-gap: 16px;
-
-  .zoom-slider {
-    padding: 0px 16px 8px 0px;
-  }
 }
 
 #root {
@@ -157,4 +57,8 @@
       height: 100%;
     }
   }
+}
+
+.zoom-slider {
+  padding: 0px 16px 8px 0px;
 }

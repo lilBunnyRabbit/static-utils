@@ -2,12 +2,13 @@ import "../../scripts/init";
 import "./index.scss";
 import { CanvasRenderer } from "../../utils/canvas.util";
 import { getImageFromClipboard, getImagesFromInput } from "../../utils/event.util";
-import { debounce } from "../../utils/input.util";
+import { debounce, usePasteImage, useUploadImages } from "../../utils/input.util";
 import { printTodo } from "../../utils/misc.util";
 import { createNotification } from "../../utils/notification.util";
 import { alphaToHex } from "../../utils/number.util";
 import { t } from "../../utils/template.util";
 import "./index.scss";
+import { deleteImageTemplate } from "../../templates/deleteImageTemplate";
 
 printTodo(["[WIP] Image sorting", "Grid"]);
 
@@ -61,26 +62,6 @@ const state = new State(
   }
 );
 
-const tDeleteImage = t`
-<button class="delete-image" draggable="true">
-  <div class="delete-image-overlay error">
-    <svg data-icon="error" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
-      <line x1="18" y1="6" x2="6" y2="18"></line>
-      <line x1="6" y1="6" x2="18" y2="18"></line>
-    </svg>
-
-    <svg data-icon="drag" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-      class="feather feather-menu">
-      <line x1="3" y1="12" x2="21" y2="12"></line>
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <line x1="3" y1="18" x2="21" y2="18"></line>
-    </svg>
-  </div>
-</button>
-`;
-
 const $sidebar = document.getElementById("sidebar");
 const $root = document.getElementById("root") as HTMLDivElement;
 const $canvasWrapper = document.getElementById("canvas-wrapper") as HTMLDivElement;
@@ -93,7 +74,6 @@ const $inputBackground = document.getElementById("i-background") as HTMLInputEle
 const $inputAlpha = document.getElementById("i-alpha") as HTMLInputElement;
 const $inputFit = document.getElementById("i-fit") as HTMLInputElement;
 const $inputDirection = document.getElementById("i-direction") as HTMLInputElement;
-const $inputImage = document.getElementById("i-image") as HTMLInputElement;
 
 class App extends StateComponent {
   private renderer!: CanvasRenderer;
@@ -103,28 +83,12 @@ class App extends StateComponent {
 
     this.renderer = new CanvasRenderer($canvas);
 
-    let isPasteEnabled = true;
-    document.addEventListener("paste", async (event) => {
-      if (!isPasteEnabled) return;
-      isPasteEnabled = false;
-
-      await getImageFromClipboard(event)
-        .then((image) => this.states.images.set([...this.states.images.get(), image]))
-        .catch((e: string) => {
-          createNotification({ title: "Paste Error", description: e, type: "error" });
-          console.error(e);
-        });
-
-      isPasteEnabled = true;
+    usePasteImage((image) => {
+      this.states.images.set([...this.states.images.get(), image]);
     });
 
-    $inputImage.addEventListener("change", (e) => {
-      getImagesFromInput(e.target as HTMLInputElement)
-        .then((images) => this.states.images.set([...this.states.images.get(), ...images]))
-        .catch((e: string) => {
-          createNotification({ title: "Upload Error", description: e, type: "error" });
-          console.error(e);
-        });
+    useUploadImages(document.getElementById("i-image"), (images) => {
+      this.states.images.set([...this.states.images.get(), ...images]);
     });
 
     this.initInputs();
@@ -344,7 +308,7 @@ class App extends StateComponent {
     this.drawImages(images, config);
 
     images.forEach((image, i) => {
-      const $deleteImage = tDeleteImage.clone();
+      const $deleteImage = deleteImageTemplate.clone();
       const $button = $deleteImage.querySelector("button");
       $button.appendChild(image);
       $button.addEventListener("click", () => {

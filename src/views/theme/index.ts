@@ -1,14 +1,7 @@
 import "../../scripts/init";
 import "./index.scss";
 import { ThemeState, themeState } from "../../scripts/init";
-import { t } from "../../utils/template.util";
-
-const tColorInput = t`
-<div class="input-box">
-  <label></label>
-  <input type="color">
-</div>
-`;
+import { colorInputTemplate } from "../../templates/colorInputTemplate";
 
 const SColors = themeState.attach("colors");
 const $inputs = document.getElementById("inputs");
@@ -27,7 +20,7 @@ const createInputs = (colors: ThemeState.Colors) => {
   $inputs.innerHTML = "";
 
   colorProperties.map((variable) => {
-    const $colorInput = tColorInput.clone();
+    const $colorInput = colorInputTemplate.clone();
     const $input = $colorInput.querySelector("input");
     const $label = $colorInput.querySelector("label");
 

@@ -6,71 +6,69 @@
   <script src="https://lilbunnyrabbit.github.io/cdn/libs/lilstate/0.2.0/lilstate.min.js"></script>
 </head>
 
-<body>
-  <div class="watermark">
+<body data-layout="sidebar">
+  <h1>
     <span>Image Concat</span>
     <span>Paste or upload an image.</span>
-  </div>
+  </h1>
 
-  <main class="sidebar-layout">
-    <div class="sidebar-wrapper">
-      <div class="sidebar">
-        <div class="input-box">
-          <label for="i-gap">Gap</label>
-          <input id="i-gap" type="number" value="0" min="0">
-        </div>
-
-        <div class="input-box">
-          <label for="i-align">Align</label>
-          <select id="i-align">
-            <option value="start">Start</option>
-            <option value="center">Center</option>
-            <option value="end">End</option>
-          </select>
-        </div>
-
-        <div class="input-box">
-          <label for="i-background">Background</label>
-          <input id="i-background" type="color">
-        </div>
-
-        <input id="i-alpha" type="range" min="0" max="100" value="50">
-
-        <label class="input-box-checkbox">
-          <div>
-            <input id="i-fit" type="checkbox">
-            <span></span>
-          </div>
-          <label for="i-fit">Fit</label>
-        </label>
-
-        <label class="input-box-checkbox">
-          <div>
-            <input id="i-direction" type="checkbox">
-            <span></span>
-          </div>
-          <label for="i-direction">Direction = Row</label>
-        </label>
-
-        <div class="input-box-file">
-          <input id="i-image" type="file" accept="image/*" multiple>
-          <button onclick="document.getElementById('i-image').click();">Upload</button>
-        </div>
+  <aside>
+    <section>
+      <div class="input-box">
+        <label for="i-gap">Gap</label>
+        <input id="i-gap" type="number" value="0" min="0">
       </div>
 
-      <div id="sidebar" class="sidebar"></div>
+      <div class="input-box">
+        <label for="i-align">Align</label>
+        <select id="i-align">
+          <option value="start">Start</option>
+          <option value="center">Center</option>
+          <option value="end">End</option>
+        </select>
+      </div>
+
+      <div class="input-box">
+        <label for="i-background">Background</label>
+        <input id="i-background" type="color">
+      </div>
+
+      <input id="i-alpha" type="range" min="0" max="100" value="50">
+
+      <label for="i-fit" class="input-box-switch">
+        <div>
+          <input id="i-fit" type="checkbox">
+          <span></span>
+        </div>
+        <label for="i-fit">Fit</label>
+      </label>
+
+      <label for="i-direction" class="input-box-switch">
+        <div>
+          <input id="i-direction" type="checkbox">
+          <span></span>
+        </div>
+        <label for="i-direction">Direction = Row</label>
+      </label>
+
+      <div class="input-box-file">
+        <input id="i-image" type="file" accept="image/*" multiple>
+        <button onclick="document.getElementById('i-image').click();">Upload</button>
+      </div>
+    </section>
+
+    <section id="sidebar"></section>
+  </aside>
+
+  <main>
+    <div id="root">
+      <div id="canvas-wrapper">
+        <canvas class="hidden" id="canvas" width="0" height="0"></canvas>
+      </div>
     </div>
 
-    <div class="root-wrapper">
-      <div id="root">
-        <div id="canvas-wrapper">
-          <canvas class="hidden" id="canvas" width="0" height="0"></canvas>
-        </div>
-      </div>
-
-      <div class="zoom-slider">
-        <input id="i-zoom" type="range" min="1" max="100" value="50">
-      </div>
+    <div class="zoom-slider">
+      <input id="i-zoom" type="range" min="1" max="100" value="50">
     </div>
   </main>
 </body>
