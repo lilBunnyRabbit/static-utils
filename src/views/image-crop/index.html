@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Static Utils | Image Crop</title>
+  <script src="https://lilbunnyrabbit.github.io/cdn/libs/lilstate/0.2.0/lilstate.min.js"></script>
+</head>
+
+<body data-layout="sidebar">
+  <h1>
+    <span>Image Crop</span>
+    <span>Paste or upload an image.</span>
+  </h1>
+
+  <aside>
+    <section>
+      <div class="input-box">
+        <label for="i-alpha">Alpha</label>
+        <input id="i-alpha" type="number" value="0" min="0" max="100">
+      </div>
+
+      <div class="input-box-file">
+        <input id="i-image" type="file" accept="image/*">
+        <button onclick="document.getElementById('i-image').click();">Upload</button>
+      </div>
+
+      <span>Original size: <span id="info-original-size"></span></span>
+      <span>Cropped size: <span id="info-cropped-size"></span></span>
+    </section>
+    <section></section>
+  </aside>
+
+  <main>
+    <canvas id="canvas-original" class="hidden"></canvas>
+    <canvas id="canvas-cropped" class="hidden"></canvas>
+  </main>
+</body>
+
+</html>

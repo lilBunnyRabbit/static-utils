@@ -56,7 +56,7 @@ const state = new State(
         useLocalStorage: false,
         useEvents: true,
         onBeforeSet: null,
-        useRefetchOnFocus: true,
+        useRefetchOnFocus: false,
       },
     },
   }

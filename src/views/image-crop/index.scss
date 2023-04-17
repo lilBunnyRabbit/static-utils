@@ -1,0 +1,16 @@
+aside {
+  grid-template-rows: min-content 1fr;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+
+canvas {
+  background: var(--background-dark);
+  border: 1px solid var(--primary);
+}
