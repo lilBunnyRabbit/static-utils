@@ -1,0 +1,10 @@
+.input-wrapper {
+  &:focus-within {
+    border-color: theme("colors.primary.400");
+
+    & > label {
+      background-color: theme("colors.primary.400");
+      border-color: theme("colors.primary.400");
+    }
+  }
+}
