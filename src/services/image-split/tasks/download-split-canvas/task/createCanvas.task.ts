@@ -1,4 +1,4 @@
-import { createTask } from "@/packages/task-manager";
+import { createTask } from "@lilbunnyrabbit/task-manager";
 
 export default createTask<void, { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D }>({
   name: "Create Canvas",

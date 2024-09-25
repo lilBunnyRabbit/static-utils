@@ -1,7 +1,8 @@
-import { createTask } from "@/packages/task-manager";
-import { DownloadSplitCanvasConfig, DownloadSplitCanvasTask } from "..";
+import { sleep } from "@/components/tmp/misc.util";
 import { ImageFile } from "@/helpers/image-file";
+import { createTask } from "@lilbunnyrabbit/task-manager";
 import type JSZip from "jszip";
+import { DownloadSplitCanvasConfig, DownloadSplitCanvasTask } from "..";
 
 export default createTask<{ config: DownloadSplitCanvasConfig; imageFile: ImageFile }, JSZip>({
   name: "Create and ZIP files",
@@ -30,7 +31,7 @@ export default createTask<{ config: DownloadSplitCanvasConfig; imageFile: ImageF
 
           return {
             status: "Images added",
-            result: `JSZip (${result.version}), ${Object.keys(result.files).length} files`,
+            result: `Zip (${Object.keys(result.files).length} files)`,
           };
         }
 
@@ -74,6 +75,8 @@ export default createTask<{ config: DownloadSplitCanvasConfig; imageFile: ImageF
         zip.file(fullName, data, { base64: true });
 
         this.setProgress(fileNumber / totalFiles);
+
+        await sleep(0);
       }
     }
 

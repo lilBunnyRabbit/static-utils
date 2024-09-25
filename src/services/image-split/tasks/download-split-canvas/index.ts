@@ -1,5 +1,5 @@
 import { ImageFile } from "@/helpers/image-file";
-import { Task } from "@/packages/task-manager";
+import { Task } from "@lilbunnyrabbit/task-manager";
 
 import * as Tasks from "./task";
 export * as DownloadSplitCanvasTask from "./task";

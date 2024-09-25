@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createTask } from "@/packages/task-manager";
+import { createTask } from "@lilbunnyrabbit/task-manager";
 import createObjectTask from "./createObject.task";
 
 export default createTask<void, Record<"first" | "last", number>>({

@@ -31,7 +31,7 @@ function ImageCropRoute(): React.ReactNode {
   useImageFileClipboard((images) => setImageFile(images[0]));
 
   return (
-    <div ref={dropRef} className={clsx("grid grid-cols-[min-content,1fr]", activeDrag && "bg-primary-950")}>
+    <div ref={dropRef} className={clsx("grid grid-cols-[min-content,1fr] h-full w-full", activeDrag && "bg-primary-950")}>
       <div className="h-full w-64 rounded-xs border-r-2 border-foreground">
         <div className="p-4 flex flex-col gap-2 justify-between h-full">
           <div>

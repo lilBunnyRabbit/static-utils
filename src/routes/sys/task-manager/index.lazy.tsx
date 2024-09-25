@@ -1,9 +1,9 @@
 import { ErrorComponent } from "@/components/route/error-component";
 import { Tasks } from "@/components/tmp/tasks";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Task, TaskManager } from "@/packages/task-manager";
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { useTaskManager } from "@/context/task-manager.context";
+import { ParsedTask, Task, TaskManager, TaskManagerFlag } from "@lilbunnyrabbit/task-manager";
+import { createLazyFileRoute, Navigate } from "@tanstack/react-router";
 import clsx from "clsx";
 import React from "react";
 
@@ -11,14 +11,26 @@ const _taskManager = new TaskManager();
 _taskManager.addTasks(Tasks.CreateUser(5, "Janez Novak"));
 _taskManager.addTasks(Tasks.CreateUser(1, "Martin Novak"));
 
-const taskManager = _taskManager;
-
 export const Route = createLazyFileRoute("/sys/task-manager/")({
   component: TaskManagerRoute,
   errorComponent: ErrorComponent,
 });
 
 function TaskManagerRoute(): React.ReactNode {
+  const { taskManager } = useTaskManager();
+
+  if (!taskManager) {
+    return <Navigate to="/" />;
+  }
+
+  return <TaskManagerDisplay taskManager={taskManager} />;
+}
+
+interface TaskManagerDisplayProps {
+  taskManager: TaskManager;
+}
+
+const TaskManagerDisplay: React.FC<TaskManagerDisplayProps> = ({ taskManager }) => {
   const [hasError, setHasError] = React.useState(false);
   const counterState = React.useState(0);
 
@@ -28,7 +40,6 @@ function TaskManagerRoute(): React.ReactNode {
     }
 
     taskManager.on("change", onChange);
-    taskManager.on("task", (task) => console.log({ task }));
     taskManager.on("fail", () => setHasError(true));
 
     return () => {
@@ -37,64 +48,43 @@ function TaskManagerRoute(): React.ReactNode {
   }, [taskManager]);
 
   return (
-    <div className="grid grid-cols-1 grid-rows-[min-content,1fr]">
-      <div className="flex flex-col p-4 border-b-2 border-foreground">
-        <div className="flex gap-4 justify-between items-center mb-2">
-          <h1>
-            [{taskManager.status}] {"Title"}
-          </h1>
+    <div className="p-8 h-full w-full overflow-hidden grid grid-cols-1 grid-rows-[min-content,1fr] gap-y-4">
+      <div className="flex gap-4 justify-between items-center p-4 border-2 border-foreground">
+        <h1 className="font-bold">
+          [{taskManager.status}] {"Title"}
+        </h1>
 
-          <div className="flex gap-4 justify-between items-center text-sm">
-            {taskManager.flags.map((flag) => `[${TaskManager.Flag[flag]}]`).join(", ")}
-          </div>
-
-          <div className="flex gap-2 items-center">
-            <Button
-              className="text-primary-400 border-primary-400"
-              disabled={!taskManager.isStatus("idle", "stopped")}
-              onClick={() => taskManager.start()}
-            >
-              {taskManager.isStatus("idle") ? "Start" : "Continue"}
-            </Button>
-            <Button
-              className="text-secondary-400 border-secondary-400"
-              disabled={!taskManager.isStatus("idle", "stopped", "fail")}
-              onClick={() => taskManager.start(true)}
-            >
-              {taskManager.isStatus("idle") ? "Start" : "Continue"} (force)
-            </Button>
-            <Button
-              className="text-red-400 border-red-400"
-              disabled={!taskManager.isStatus("in-progress")}
-              onClick={() => taskManager.stop()}
-            >
-              Stop
-            </Button>
-            <Button
-              className="text-orange-400 border-orange-400"
-              disabled={taskManager.isStatus("in-progress", "idle")}
-              onClick={() => taskManager.reset()}
-            >
-              Reset
-            </Button>
-            <Button
-              className="text-tertiary-400 border-tertiary-400"
-              disabled={!taskManager.queue.length}
-              onClick={() => taskManager.clearQueue()}
-            >
-              Clear Queue
-            </Button>
-          </div>
+        <div className="flex gap-4 justify-between items-center text-sm">
+          {taskManager.flags.map((flag) => `[${TaskManagerFlag[flag]}]`).join(", ")}
         </div>
 
-        <Progress
-          className={clsx("mt-4 mb-2 rounded-none", (taskManager.status === "fail" || hasError) && "bg-red-500")}
-          value={taskManager.progress * 100}
-          max={100}
-        />
+        <div>{`${Math.round(taskManager.progress * 100)}%`}</div>
+
+        <div className="flex gap-2 items-center">
+          <Button
+            variant="inverted"
+            disabled={!taskManager.isStatus("idle", "stopped", "fail")}
+            onClick={() => taskManager.start(taskManager.isStatus("fail"))}
+          >
+            {taskManager.isStatus("idle") ? "Start" : "Continue"} {taskManager.isStatus("fail") && "(force)"}
+          </Button>
+          <Button variant="inverted" disabled={!taskManager.isStatus("in-progress")} onClick={() => taskManager.stop()}>
+            Stop
+          </Button>
+          <Button
+            variant="inverted"
+            disabled={taskManager.isStatus("in-progress", "idle")}
+            onClick={() => taskManager.reset()}
+          >
+            Reset
+          </Button>
+          <Button variant="inverted" disabled={!taskManager.queue.length} onClick={() => taskManager.clearQueue()}>
+            Clear Queue
+          </Button>
+        </div>
       </div>
 
-      <div className="flex flex-col gap-4 overflow-y-auto max-h-full p-4">
+      <div className="flex flex-col gap-4 overflow-y-auto max-h-full">
         {taskManager.tasks.map((task) => (
           <TaskDisplay key={`task-${task.id}`} task={task} />
         ))}
@@ -105,19 +95,18 @@ function TaskManagerRoute(): React.ReactNode {
       </div>
     </div>
   );
-}
+};
 
 interface TaskDisplayProps {
   task: Task;
 }
 
 const TaskDisplay: React.FC<TaskDisplayProps> = ({ task }) => {
-  const [parsed, setParsed] = React.useState<Task.Parsed>(() => task.parse());
+  const [parsed, setParsed] = React.useState<ParsedTask>(() => task.parse());
 
   React.useEffect(() => {
     function onChange(this: Task) {
       const parsed = this.parse();
-      console.log({ parsed });
       setParsed(parsed);
     }
 
@@ -135,7 +124,7 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({ task }) => {
   );
 };
 interface ParsedDisplayProps {
-  parsed: Task.Parsed;
+  parsed: ParsedTask;
   task: Task;
 }
 
@@ -143,14 +132,13 @@ const ParsedDisplay: React.FC<ParsedDisplayProps> = ({ parsed, task }) => {
   const head = (
     <div
       className={clsx(
-        "font-bold text-background px-2 py-1 flex justify-between items-center border-2 border-current",
+        "font-bold text-background px-4 py-2 flex justify-between items-center border-b-2",
         {
-          idle: "text-gray-400",
-          "in-progress": "text-orange-400",
-          success: "text-green-600",
-          error: "text-red-400",
-        }[task.status],
-        task.status !== "idle" && "mb-2"
+          idle: "bg-gray-400 border-gray-400",
+          "in-progress": "bg-orange-400 border-orange-400",
+          success: "bg-green-600 border-green-600",
+          error: "bg-red-400 border-red-400",
+        }[task.status]
       )}
     >
       <div>
@@ -161,15 +149,25 @@ const ParsedDisplay: React.FC<ParsedDisplayProps> = ({ parsed, task }) => {
     </div>
   );
 
-  if (task.status === "idle") {
+  if (task.status === "idle" || !(parsed.result || parsed.warnings || parsed.errors)) {
     return head;
   }
 
   return (
-    <div>
+    <div
+      className={clsx(
+        "border-2 border-t-0",
+        {
+          idle: "border-gray-400",
+          "in-progress": "border-orange-400",
+          success: "border-green-600",
+          error: "border-red-400",
+        }[task.status]
+      )}
+    >
       {head}
-      <div className={clsx("flex flex-col gap-2 text-sm")}>
-        {parsed.result && <pre className="border-l-2 border-foreground pl-4 ml-1">{parsed.result}</pre>}
+      <div className={clsx("flex flex-col gap-2 p-4")}>
+        {parsed.result && <pre className="font-hack">{parsed.result}</pre>}
 
         {(parsed.warnings?.length || parsed.errors?.length) && (
           <ul className="ml-5 list-disc">

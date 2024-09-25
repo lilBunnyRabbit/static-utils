@@ -1,6 +1,7 @@
 import { ErrorComponent } from "@/components/route/error-component";
 import { Button } from "@/components/ui/button";
 import { useNavbar } from "@/context/navbar.context";
+import { TaskManagerProvider } from "@/context/task-manager.context";
 import { createRootRoute, Link, Outlet, useMatches } from "@tanstack/react-router";
 import clsx from "clsx";
 import { LayoutGridIcon } from "lucide-react";
@@ -29,8 +30,8 @@ function Root(): React.ReactNode {
   }, [matches]);
 
   return (
-    <>
-      <main className="relative overflow-hidden">
+    <TaskManagerProvider>
+      <main className="relative overflow-hidden h-full w-full">
         <Outlet />
       </main>
 
@@ -65,6 +66,6 @@ function Root(): React.ReactNode {
       </div>
 
       {/* <TanStackRouterDevtools position="top-right" /> */}
-    </>
+    </TaskManagerProvider>
   );
 }

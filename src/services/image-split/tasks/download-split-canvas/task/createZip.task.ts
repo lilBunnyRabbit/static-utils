@@ -1,4 +1,4 @@
-import { createTask } from "@/packages/task-manager";
+import { createTask } from "@lilbunnyrabbit/task-manager";
 import JSZip from "jszip";
 
 export default createTask<void, JSZip>({
@@ -25,8 +25,8 @@ export default createTask<void, JSZip>({
       case "success": {
         if (this.result.isPresent()) {
           return {
-            status: "Generated information",
-            result: `JSZip (${this.result.get().version})`,
+            status: "ZIP file created",
+            result: "",
           };
         }
 

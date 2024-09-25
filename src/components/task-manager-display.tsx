@@ -1,4 +1,4 @@
-import { Task, TaskManager } from "@/packages/task-manager";
+import { ParsedTask, Task, TaskManager } from "@lilbunnyrabbit/task-manager";
 import React from "react";
 import { Progress } from "./ui/progress";
 import clsx from "clsx";
@@ -100,7 +100,7 @@ interface TaskDisplayProps {
 }
 
 const TaskDisplay: React.FC<TaskDisplayProps> = ({ task }) => {
-  const [parsed, setParsed] = React.useState<Task.Parsed>(() => task.parse());
+  const [parsed, setParsed] = React.useState<ParsedTask>(() => task.parse());
 
   React.useEffect(() => {
     function onChange(this: Task) {
@@ -136,7 +136,7 @@ const TaskDisplay: React.FC<TaskDisplayProps> = ({ task }) => {
   );
 };
 interface ParsedDisplayProps {
-  parsed: Task.Parsed;
+  parsed: ParsedTask;
   task: Task;
 }
 

@@ -1,4 +1,4 @@
-import { createTask } from "@/packages/task-manager";
+import { createTask } from "@lilbunnyrabbit/task-manager";
 import createObjectTask from "./createObject.task";
 import { sleep } from "../../misc.util";
 

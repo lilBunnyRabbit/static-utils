@@ -1,14 +1,14 @@
 import { InputWrapper } from "@/components/input-wrapper";
 import { ErrorComponent, ErrorElement } from "@/components/route/error-component";
-import { TaskManagerDisplay } from "@/components/task-manager-display";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavbar } from "@/context/navbar.context";
+import { useTaskManager } from "@/context/task-manager.context";
 import { ImageFile, useImageFileClipboard, useImageFileDrop } from "@/helpers/image-file";
-import { TaskManager } from "@/packages/task-manager";
 import { ImageSplitServiceSettings, useImageSplit, useImageSplitSettings } from "@/services/image-split/";
 import DownloadSplitCanvasTasks from "@/services/image-split/tasks/download-split-canvas";
+import { TaskManager } from "@lilbunnyrabbit/task-manager";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import clsx from "clsx";
 import { Ellipsis, Loader2 } from "lucide-react";
@@ -23,6 +23,8 @@ function ImageSplitRoute(): React.ReactNode {
   const { showInfo } = useNavbar();
   const [imageFile, setImageFile] = React.useState<ImageFile>();
 
+  const { setTaskManager } = useTaskManager();
+
   const [settings, setSetting] = useImageSplitSettings();
   const { ref, isLoading, state, data } = useImageSplit(imageFile, settings);
 
@@ -35,10 +37,11 @@ function ImageSplitRoute(): React.ReactNode {
 
   useImageFileClipboard((images) => setImageFile(images[0]));
 
-  const [taskManager, setTaskManager] = React.useState<TaskManager | null>(null);
-
   return (
-    <div ref={dropRef} className={clsx("grid grid-cols-[min-content,1fr]", activeDrag && "bg-primary-950")}>
+    <div
+      ref={dropRef}
+      className={clsx("grid grid-cols-[min-content,1fr] h-full w-full", activeDrag && "bg-primary-950")}
+    >
       <div className="h-full w-64 rounded-xs border-r-2 border-foreground">
         <div className="p-4 flex flex-col gap-2 justify-between h-full">
           <div className="flex flex-col gap-2">
@@ -103,16 +106,13 @@ function ImageSplitRoute(): React.ReactNode {
         </div>
       </div>
 
-      {taskManager && <TaskManagerDisplay title="Download Split Images" taskManager={taskManager} />}
-
       <div
         className={clsx(
           "relative w-full h-full grid grid-cols-1 grid-rows-[1fr,min-content] place-items-center overflow-hidden p-8 gap-8",
-          !imageFile && "opacity-0",
-          taskManager && "hidden"
+          !imageFile && "opacity-0"
         )}
       >
-        <canvas ref={ref} className="object-contain max-w-full max-h-full border-2 border-foreground" />
+        <canvas ref={ref} className="object-contain max-w-full max-h-full min-h-0 min-w-0 border-2 border-foreground" />
 
         <div className="h-10 border-2 border-foreground px-2 w-full flex items-center justify-center">
           {data && `${data.rows} × ${data.columns} (${data.size} px)`}

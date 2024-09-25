@@ -1,4 +1,4 @@
-import { createTask } from "@/packages/task-manager";
+import { createTask } from "@lilbunnyrabbit/task-manager";
 import updateUserTask from "./updateUser.task";
 import { dummyProgress, sleep } from "../../misc.util";
 
