@@ -1,33 +1,15 @@
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <script src="./utils.js"></script>
-    <script src="./index.js"></script>
-    <link rel="stylesheet" href="./index.css" />
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Static Utils</title>
 
-    <meta property="og:title" content="Static utils by lilBunnyRabbit" />
-    <meta property="og:description" content="A collection of usefull static sites written in vanilla HTML." />
-    <meta property="og:image" content="https://lilbunnyrabbit.github.io/static-utils/files/logo.png" />
-
-    <title>Static utils</title>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XPJ8VF9PGN"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "G-XPJ8VF9PGN");
-    </script>
+    <link rel='stylesheet' href='//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.css'>
   </head>
   <body>
-    <div class="title-box">
-      <p class="title-big">Static utils</p>
-      <p class="title-small">by lilBunnyRabbit</p>
-    </div>
-
-    <div class="links-container" id="links-container"></div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

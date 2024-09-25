@@ -1,0 +1,30 @@
+.canvas-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  &[data-direction="column"] {
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    justify-items: center;
+
+    & > canvas {
+      width: 100%;
+    }
+  }
+
+  &[data-direction="row"] {
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    align-items: center;
+
+    & > canvas {
+      height: 100%;
+    }
+  }
+}
