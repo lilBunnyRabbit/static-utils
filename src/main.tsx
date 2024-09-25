@@ -24,7 +24,7 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <NavbarProvider>
-        <RouterProvider router={router} />
+        <RouterProvider router={router} basepath={import.meta.env.BASE_URL} />
       </NavbarProvider>
     </StrictMode>
   );
