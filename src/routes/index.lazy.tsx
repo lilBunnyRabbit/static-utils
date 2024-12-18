@@ -20,6 +20,12 @@ function IndexRoute() {
 
       <ToolBox name="Image Split" description="Description, description, description, ..." to="/tools/image-split" />
 
+      <ToolBox
+        name="[WIP] Background Remove"
+        description="Description, description, description, ..."
+        to="/tools/background-remove"
+      />
+
       {Array(5 * 6 - 4)
         .fill(0)
         .map((_, i) => (

@@ -1,4 +1,4 @@
-import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { RouterProvider, createHashHistory, createRouter } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { NavbarProvider } from "./context/navbar.context";
@@ -7,8 +7,10 @@ import "./index.scss";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
 
+const hashHistory = createHashHistory();
+
 // Create a new router instance
-const router = createRouter({ routeTree, defaultPreload: "intent" });
+const router = createRouter({ routeTree, history: hashHistory, defaultPreload: "intent" });
 
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {
@@ -24,7 +26,7 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <NavbarProvider>
-        <RouterProvider router={router} basepath={import.meta.env.BASE_URL} />
+        <RouterProvider router={router} />
       </NavbarProvider>
     </StrictMode>
   );
