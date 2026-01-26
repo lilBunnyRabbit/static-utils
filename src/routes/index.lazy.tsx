@@ -26,7 +26,13 @@ function IndexRoute() {
         to="/tools/background-remove"
       />
 
-      {Array(5 * 6 - 4)
+      <ToolBox
+        name="QR Reader"
+        description="Scan and decode QR codes from images, camera, or clipboard"
+        to="/tools/qr-reader"
+      />
+
+      {Array(5 * 6 - 5)
         .fill(0)
         .map((_, i) => (
           <div
