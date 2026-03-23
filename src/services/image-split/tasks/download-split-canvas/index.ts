@@ -18,5 +18,6 @@ export default function DownloadSplitCanvasTasks(config: DownloadSplitCanvasConf
     Tasks.CreateCanvas(),
     Tasks.CreateAndZip({ config, imageFile }),
     Tasks.PackageZip(),
+    Tasks.DownloadZip({ config }),
   ];
 }

@@ -91,7 +91,7 @@ function ImageSplitRoute(): React.ReactNode {
                   DownloadSplitCanvasTasks(
                     {
                       ...data,
-                      filename: "tralala",
+                      filename: imageFile.file.name,
                     },
                     imageFile
                   )
