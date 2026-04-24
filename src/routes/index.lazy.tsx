@@ -32,7 +32,13 @@ function IndexRoute() {
         to="/tools/qr-reader"
       />
 
-      {Array(5 * 6 - 5)
+      <ToolBox
+        name="GIF & Video Player"
+        description="Play, scrub, and step through a GIF or video frame-by-frame — handy for QA bug reports."
+        to="/tools/gif-player"
+      />
+
+      {Array(5 * 6 - 6)
         .fill(0)
         .map((_, i) => (
           <div

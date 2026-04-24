@@ -18,6 +18,7 @@ import { Route as ToolsQrReaderIndexImport } from './routes/tools/qr-reader/inde
 import { Route as ToolsImageSplitIndexImport } from './routes/tools/image-split/index'
 import { Route as ToolsImageCropIndexImport } from './routes/tools/image-crop/index'
 import { Route as ToolsImageConcatIndexImport } from './routes/tools/image-concat/index'
+import { Route as ToolsGifPlayerIndexImport } from './routes/tools/gif-player/index'
 import { Route as ToolsBackgroundRemoveIndexImport } from './routes/tools/background-remove/index'
 import { Route as SysTaskManagerIndexImport } from './routes/sys/task-manager/index'
 
@@ -63,6 +64,13 @@ const ToolsImageConcatIndexRoute = ToolsImageConcatIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
   import('./routes/tools/image-concat/index.lazy').then((d) => d.Route),
+)
+
+const ToolsGifPlayerIndexRoute = ToolsGifPlayerIndexImport.update({
+  path: '/tools/gif-player/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/tools/gif-player/index.lazy').then((d) => d.Route),
 )
 
 const ToolsBackgroundRemoveIndexRoute = ToolsBackgroundRemoveIndexImport.update(
@@ -113,6 +121,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsBackgroundRemoveIndexImport
       parentRoute: typeof rootRoute
     }
+    '/tools/gif-player/': {
+      id: '/tools/gif-player/'
+      path: '/tools/gif-player'
+      fullPath: '/tools/gif-player'
+      preLoaderRoute: typeof ToolsGifPlayerIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/tools/image-concat/': {
       id: '/tools/image-concat/'
       path: '/tools/image-concat'
@@ -151,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/testing': typeof TestingRoute
   '/sys/task-manager': typeof SysTaskManagerIndexRoute
   '/tools/background-remove': typeof ToolsBackgroundRemoveIndexRoute
+  '/tools/gif-player': typeof ToolsGifPlayerIndexRoute
   '/tools/image-concat': typeof ToolsImageConcatIndexRoute
   '/tools/image-crop': typeof ToolsImageCropIndexRoute
   '/tools/image-split': typeof ToolsImageSplitIndexRoute
@@ -162,6 +178,7 @@ export interface FileRoutesByTo {
   '/testing': typeof TestingRoute
   '/sys/task-manager': typeof SysTaskManagerIndexRoute
   '/tools/background-remove': typeof ToolsBackgroundRemoveIndexRoute
+  '/tools/gif-player': typeof ToolsGifPlayerIndexRoute
   '/tools/image-concat': typeof ToolsImageConcatIndexRoute
   '/tools/image-crop': typeof ToolsImageCropIndexRoute
   '/tools/image-split': typeof ToolsImageSplitIndexRoute
@@ -174,6 +191,7 @@ export interface FileRoutesById {
   '/testing': typeof TestingRoute
   '/sys/task-manager/': typeof SysTaskManagerIndexRoute
   '/tools/background-remove/': typeof ToolsBackgroundRemoveIndexRoute
+  '/tools/gif-player/': typeof ToolsGifPlayerIndexRoute
   '/tools/image-concat/': typeof ToolsImageConcatIndexRoute
   '/tools/image-crop/': typeof ToolsImageCropIndexRoute
   '/tools/image-split/': typeof ToolsImageSplitIndexRoute
@@ -187,6 +205,7 @@ export interface FileRouteTypes {
     | '/testing'
     | '/sys/task-manager'
     | '/tools/background-remove'
+    | '/tools/gif-player'
     | '/tools/image-concat'
     | '/tools/image-crop'
     | '/tools/image-split'
@@ -197,6 +216,7 @@ export interface FileRouteTypes {
     | '/testing'
     | '/sys/task-manager'
     | '/tools/background-remove'
+    | '/tools/gif-player'
     | '/tools/image-concat'
     | '/tools/image-crop'
     | '/tools/image-split'
@@ -207,6 +227,7 @@ export interface FileRouteTypes {
     | '/testing'
     | '/sys/task-manager/'
     | '/tools/background-remove/'
+    | '/tools/gif-player/'
     | '/tools/image-concat/'
     | '/tools/image-crop/'
     | '/tools/image-split/'
@@ -219,6 +240,7 @@ export interface RootRouteChildren {
   TestingRoute: typeof TestingRoute
   SysTaskManagerIndexRoute: typeof SysTaskManagerIndexRoute
   ToolsBackgroundRemoveIndexRoute: typeof ToolsBackgroundRemoveIndexRoute
+  ToolsGifPlayerIndexRoute: typeof ToolsGifPlayerIndexRoute
   ToolsImageConcatIndexRoute: typeof ToolsImageConcatIndexRoute
   ToolsImageCropIndexRoute: typeof ToolsImageCropIndexRoute
   ToolsImageSplitIndexRoute: typeof ToolsImageSplitIndexRoute
@@ -230,6 +252,7 @@ const rootRouteChildren: RootRouteChildren = {
   TestingRoute: TestingRoute,
   SysTaskManagerIndexRoute: SysTaskManagerIndexRoute,
   ToolsBackgroundRemoveIndexRoute: ToolsBackgroundRemoveIndexRoute,
+  ToolsGifPlayerIndexRoute: ToolsGifPlayerIndexRoute,
   ToolsImageConcatIndexRoute: ToolsImageConcatIndexRoute,
   ToolsImageCropIndexRoute: ToolsImageCropIndexRoute,
   ToolsImageSplitIndexRoute: ToolsImageSplitIndexRoute,
@@ -252,6 +275,7 @@ export const routeTree = rootRoute
         "/testing",
         "/sys/task-manager/",
         "/tools/background-remove/",
+        "/tools/gif-player/",
         "/tools/image-concat/",
         "/tools/image-crop/",
         "/tools/image-split/",
@@ -269,6 +293,9 @@ export const routeTree = rootRoute
     },
     "/tools/background-remove/": {
       "filePath": "tools/background-remove/index.tsx"
+    },
+    "/tools/gif-player/": {
+      "filePath": "tools/gif-player/index.tsx"
     },
     "/tools/image-concat/": {
       "filePath": "tools/image-concat/index.tsx"
