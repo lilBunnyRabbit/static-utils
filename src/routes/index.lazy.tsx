@@ -38,7 +38,13 @@ function IndexRoute() {
         to="/tools/gif-player"
       />
 
-      {Array(5 * 6 - 6)
+      <ToolBox
+        name="Sprite Sheet Extractor"
+        description="Slice imperfect sprite sheets into frames — adjustable grid, padding, per-frame tuning, looped preview, zip/sheet export."
+        to="/tools/sprite-extract"
+      />
+
+      {Array(5 * 6 - 8)
         .fill(0)
         .map((_, i) => (
           <div

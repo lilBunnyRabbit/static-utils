@@ -26,6 +26,11 @@ export function useImageFileClipboard(callback: (imageFiles: ImageFile[]) => voi
   }, [callback]);
 }
 
+function hasFiles(event: DragEvent): boolean {
+  const types = event.dataTransfer?.types;
+  return !!types && Array.from(types).includes("Files");
+}
+
 export function useImageFileDrop<Element extends HTMLElement = HTMLElement>(
   callback: (imageFiles: ImageFile[]) => void
 ) {
@@ -34,10 +39,10 @@ export function useImageFileDrop<Element extends HTMLElement = HTMLElement>(
   const ref = React.useRef<Element>(null);
 
   const handleDrag = React.useCallback((event: DragEvent) => {
-    event.preventDefault();
-    event.stopPropagation();
+    // Only react to external file drags; leave in-page drag & drop (e.g. list reordering) alone.
+    if (!hasFiles(event)) return;
 
-    console.log(event.type);
+    event.preventDefault();
 
     if (event.type === "dragenter" || event.type === "dragover") {
       setActiveDrag(true);
@@ -47,8 +52,9 @@ export function useImageFileDrop<Element extends HTMLElement = HTMLElement>(
   }, []);
 
   const handleDrop = React.useCallback(async (event: DragEvent) => {
+    if (!hasFiles(event)) return;
+
     event.preventDefault();
-    event.stopPropagation();
 
     setActiveDrag(false);
 

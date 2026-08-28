@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as TestingImport } from './routes/testing'
+import { Route as ToolsSpriteExtractIndexImport } from './routes/tools/sprite-extract/index'
 import { Route as ToolsQrReaderIndexImport } from './routes/tools/qr-reader/index'
 import { Route as ToolsImageSplitIndexImport } from './routes/tools/image-split/index'
 import { Route as ToolsImageCropIndexImport } from './routes/tools/image-crop/index'
@@ -37,6 +38,13 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const ToolsSpriteExtractIndexRoute = ToolsSpriteExtractIndexImport.update({
+  path: '/tools/sprite-extract/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/tools/sprite-extract/index.lazy').then((d) => d.Route),
+)
 
 const ToolsQrReaderIndexRoute = ToolsQrReaderIndexImport.update({
   path: '/tools/qr-reader/',
@@ -156,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsQrReaderIndexImport
       parentRoute: typeof rootRoute
     }
+    '/tools/sprite-extract/': {
+      id: '/tools/sprite-extract/'
+      path: '/tools/sprite-extract'
+      fullPath: '/tools/sprite-extract'
+      preLoaderRoute: typeof ToolsSpriteExtractIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -171,6 +186,7 @@ export interface FileRoutesByFullPath {
   '/tools/image-crop': typeof ToolsImageCropIndexRoute
   '/tools/image-split': typeof ToolsImageSplitIndexRoute
   '/tools/qr-reader': typeof ToolsQrReaderIndexRoute
+  '/tools/sprite-extract': typeof ToolsSpriteExtractIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -183,6 +199,7 @@ export interface FileRoutesByTo {
   '/tools/image-crop': typeof ToolsImageCropIndexRoute
   '/tools/image-split': typeof ToolsImageSplitIndexRoute
   '/tools/qr-reader': typeof ToolsQrReaderIndexRoute
+  '/tools/sprite-extract': typeof ToolsSpriteExtractIndexRoute
 }
 
 export interface FileRoutesById {
@@ -196,6 +213,7 @@ export interface FileRoutesById {
   '/tools/image-crop/': typeof ToolsImageCropIndexRoute
   '/tools/image-split/': typeof ToolsImageSplitIndexRoute
   '/tools/qr-reader/': typeof ToolsQrReaderIndexRoute
+  '/tools/sprite-extract/': typeof ToolsSpriteExtractIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -210,6 +228,7 @@ export interface FileRouteTypes {
     | '/tools/image-crop'
     | '/tools/image-split'
     | '/tools/qr-reader'
+    | '/tools/sprite-extract'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -221,6 +240,7 @@ export interface FileRouteTypes {
     | '/tools/image-crop'
     | '/tools/image-split'
     | '/tools/qr-reader'
+    | '/tools/sprite-extract'
   id:
     | '__root__'
     | '/'
@@ -232,6 +252,7 @@ export interface FileRouteTypes {
     | '/tools/image-crop/'
     | '/tools/image-split/'
     | '/tools/qr-reader/'
+    | '/tools/sprite-extract/'
   fileRoutesById: FileRoutesById
 }
 
@@ -245,6 +266,7 @@ export interface RootRouteChildren {
   ToolsImageCropIndexRoute: typeof ToolsImageCropIndexRoute
   ToolsImageSplitIndexRoute: typeof ToolsImageSplitIndexRoute
   ToolsQrReaderIndexRoute: typeof ToolsQrReaderIndexRoute
+  ToolsSpriteExtractIndexRoute: typeof ToolsSpriteExtractIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -257,6 +279,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsImageCropIndexRoute: ToolsImageCropIndexRoute,
   ToolsImageSplitIndexRoute: ToolsImageSplitIndexRoute,
   ToolsQrReaderIndexRoute: ToolsQrReaderIndexRoute,
+  ToolsSpriteExtractIndexRoute: ToolsSpriteExtractIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -279,7 +302,8 @@ export const routeTree = rootRoute
         "/tools/image-concat/",
         "/tools/image-crop/",
         "/tools/image-split/",
-        "/tools/qr-reader/"
+        "/tools/qr-reader/",
+        "/tools/sprite-extract/"
       ]
     },
     "/": {
@@ -308,6 +332,9 @@ export const routeTree = rootRoute
     },
     "/tools/qr-reader/": {
       "filePath": "tools/qr-reader/index.tsx"
+    },
+    "/tools/sprite-extract/": {
+      "filePath": "tools/sprite-extract/index.tsx"
     }
   }
 }
